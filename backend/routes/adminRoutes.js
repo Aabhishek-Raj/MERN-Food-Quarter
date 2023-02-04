@@ -8,8 +8,11 @@ router.post('/signin', adminController.adminSignIn )
 router.get('/allusers',adminProtect, adminController.getAllUsers)
 router.get('/allsuppliers', adminProtect, adminController.getVerifiedSuppliers)
 router.get('/notverified', adminProtect, adminController.getSupplierRequest)
-router.post('/blockuser', adminProtect, adminController.blockUser)
+router.patch('/blockuser', adminProtect, adminController.blockUser)
+router.patch('/unblockuser', adminProtect, adminController.unBlockUser)
 router.patch('/verify', adminProtect, adminController.verifySupplier)
+router.patch('/blocksupplier', adminProtect, adminController.blockSupplier)
+router.patch('/unblocksupplier', adminProtect, adminController.unBlockSupplier)
 
 
 module.exports = router

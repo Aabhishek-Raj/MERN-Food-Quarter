@@ -8,29 +8,29 @@ import Header from "./Header";
 import { useEffect } from "react";
 import { blockUser, getAllusers } from "../../features/admin/adminService";
 import { useState } from "react"; 
-import { Hail, ReportGmailerrorred } from "@mui/icons-material";
-import { HiLockClosed, HiOutlineLockClosed } from "react-icons/hi";
+import { CleaningServices, Hail, ReportGmailerrorred } from "@mui/icons-material";
+import { HiChevronDoubleLeft, HiLockClosed, HiOutlineLockClosed } from "react-icons/hi";
 
 const UsersView = () => {
   
   const theme = useTheme();
 
   const [users, setUsers] = useState()
+  const [isBlock, setIsBlock] = useState(false)
 
+  async function fetchData(){
+
+    const data = await getAllusers()
+    setUsers(data)
+  }
   useEffect(() => {
-    async function fetchData(){
-
-      const data = await getAllusers()
-      setUsers(data)
-    }
     fetchData()
   }, [])
 
   //Block the user
-  async function block(userId) {
-    console.log('first')
-    console.log(userId)
-    const result = await blockUser(userId)
+  async function handleBlock(userId, manage) {
+    const result = await blockUser(userId, manage)
+    fetchData()
   }
 
   if(!users){
@@ -80,27 +80,27 @@ const UsersView = () => {
       field: "accessLevel",
       headerName: "Manage user",
       flex: 1,
-      renderCell: ({ row: { access } }) => {
+      renderCell: ({ row: { _id, isActive } }) => {
         return (
           <Box
             width="40%"
-            // m="0 auto"
+            // m="0 auto" 
             p="3px"
             display="flex"
             justifyContent="center"
             backgroundColor={ colors.greenAccent[600] }
             borderRadius="4px"
           >
-            { !data.isActive && <Button onClick={((e) => block(access._id))}><LockOpenOutlinedIcon /></Button>}
-            { data.isActive && <Button><HiOutlineLockClosed /></Button>}
+            { isActive && <Button onClick={((e) => handleBlock(_id, 'Block'))}><LockOpenOutlinedIcon /></Button>}
+            { !isActive && <Button onClick={((e) => handleBlock(_id, 'UnBlock'))}><HiOutlineLockClosed /></Button>}
 
             {/* {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
             {access === "manager" && <SecurityOutlinedIcon />}
             {access === "user" && <LockOpenOutlinedIcon />} */}
             
-            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-              {access}
-            </Typography>
+            {/* <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
+              {_id}
+            </Typography> */}
           </Box>
         );
       },

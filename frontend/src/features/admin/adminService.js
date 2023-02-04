@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({baseURL: 'http://localhost:4000/admin'})
+const API = axios.create({ baseURL: 'http://localhost:4000/admin' })
 
 export const login = async ({ formValue, navigate, toast }) => {
     const response = await API.post('/signin', formValue)
@@ -13,14 +13,14 @@ export const login = async ({ formValue, navigate, toast }) => {
 }
 
 export const adminlogout = async () => {
-    await localStorage.removeItem('admin')      
+    await localStorage.removeItem('admin')
 }
 
 // Get all users
 export const getAllusers = async () => {
-    const storageData = JSON.parse(localStorage.getItem('admin')) 
+    const storageData = JSON.parse(localStorage.getItem('admin'))
 
-    try{
+    try {
         const config = {
             headers: {
                 Authorization: `Bearer ${storageData.token}`
@@ -29,7 +29,7 @@ export const getAllusers = async () => {
         const response = await API.get('/allusers', config)
         return response.data
 
-    } catch(err){
+    } catch (err) {
         console.log(err.response.data)
         return err.response
     }
@@ -39,7 +39,7 @@ export const getAllusers = async () => {
 export const getVerifiedSuppliers = async () => {
     const storageData = JSON.parse(localStorage.getItem('admin'))
 
-    try{
+    try {
         const config = {
             headers: {
                 Authorization: `Bearer ${storageData.token}`
@@ -48,7 +48,7 @@ export const getVerifiedSuppliers = async () => {
         const response = await API.get('/allsuppliers', config)
         return response.data
 
-    } catch(err) {
+    } catch (err) {
         console.log(err.response.data)
     }
 }
@@ -67,12 +67,12 @@ export const getSupplierRequests = async () => {
         return response.data
 
     } catch (err) {
-        console.log(err.response.data)      
+        console.log(err.response.data)
     }
 }
 
 //Block an user
-export const blockUser = async(userId) => {
+export const blockUser = async (userId, manage) => {
     const storageData = JSON.parse(localStorage.getItem('admin'))
 
     try {
@@ -81,7 +81,13 @@ export const blockUser = async(userId) => {
                 Authorization: `Bearer ${storageData.token}`
             }
         }
-        const response = await API.patch(`/blockuser/${userId}`, config)
+        let endpoint;
+        if (manage === 'Block') {
+            endpoint = '/blockuser';
+        } else if (manage === 'UnBlock') {
+            endpoint = '/unblockuser';
+        }
+        const response = await API.patch(endpoint, { userId }, config)
         return response.data
     } catch (err) {
         console.log(err.response.data)
@@ -92,15 +98,15 @@ export const blockUser = async(userId) => {
 export const verifySupplier = async (supplierId) => {
     const storageData = JSON.parse(localStorage.getItem('admin'))
 
-    try{
+    try {
         const config = {
             headers: {
                 Authorization: `Bearer ${storageData.token}`
             }
         }
-        const response = await API.patch('/verify', {supplierId}, config)
+        const response = await API.patch('/verify', { supplierId }, config)
         return response.data
-    } catch (err){
+    } catch (err) {
         console.log(err.response.data)
     }
 }
@@ -115,9 +121,32 @@ export const rejectSupplier = async (supplierId) => {
                 Authorization: `Bearer ${storageData.token}`
             }
         }
-        const response = await API.delete('/reject', {supplierId}, config)
+        const response = await API.delete('/reject', { supplierId }, config)
         return response.data
-    }catch(err){
+    } catch (err) {
         console.log(err)
+    }
+}
+
+// Block Supplier
+export const blockSupplier = async (supplierId, manage) => {
+    const storageData = JSON.parse(localStorage.getItem('admin'))
+
+    try {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${storageData.token}`
+            }
+        }
+        let endpoint;
+        if (manage === 'Block') {
+            endpoint = '/blocksupplier';
+        } else if (manage === 'UnBlock') {
+            endpoint = '/unblocksupplier';
+        }
+        const response = await API.patch(endpoint, { supplierId }, config)
+        return response.data
+    } catch (err) {
+        console.log(err.response.data)
     }
 }

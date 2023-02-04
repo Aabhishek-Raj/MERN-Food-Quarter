@@ -1,12 +1,15 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import { tokens } from "./theme";
 import { mockDataContacts } from "../../data/mockData";
 import Header from "./Header";
 import { useTheme } from "@mui/material";
 import { useEffect } from "react";
-import { getVerifiedSuppliers } from "../../features/admin/adminService";
+import { blockSupplier, getVerifiedSuppliers } from "../../features/admin/adminService";
 import { useState } from "react";
+import { HiOutlineLockClosed } from "react-icons/hi";
+
 
 const SuppliersView = () => {
   const theme = useTheme();
@@ -14,15 +17,22 @@ const SuppliersView = () => {
   const [suppliers, setSuppliers] = useState()
   const colors = tokens(theme.palette.mode);
 
+  async function fetchData(){
+
+    const data = await getVerifiedSuppliers()
+    setSuppliers(data)
+  }
 
   useEffect(() => {
-    async function fetchData(){
 
-      const data = await getVerifiedSuppliers()
-      setSuppliers(data)
-    }
     fetchData()
   },[])
+
+  const handleBlock = async (supplierId, manage) => {
+    const result = await blockSupplier(supplierId, manage)
+    console.log(result)
+    fetchData()
+  }
 
   if(!suppliers){
     return <div>No Suppliers present</div>
@@ -84,6 +94,34 @@ const SuppliersView = () => {
       headerName: "Active",
       flex: 1,
     },
+    {
+      headerName: "Manage",
+      flex: 1,
+      renderCell: ({ row: { _id, isActive } }) => {
+        return (
+          <Box
+            width="40%"
+            // m="0 auto" 
+            p="3px"
+            display="flex"
+            justifyContent="center"
+            backgroundColor={ colors.greenAccent[600] }
+            borderRadius="4px"
+          >
+            { isActive && <Button onClick={((e) => handleBlock(_id, 'Block'))}><LockOpenOutlinedIcon /></Button>}
+            { !isActive && <Button onClick={((e) => handleBlock(_id, 'UnBlock'))}><HiOutlineLockClosed /></Button>}
+
+            {/* {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
+            {access === "manager" && <SecurityOutlinedIcon />}
+            {access === "user" && <LockOpenOutlinedIcon />} */}
+            
+            {/* <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
+              {_id}
+            </Typography> */}
+          </Box>
+        );
+      },
+    }
   ];
 
   return (

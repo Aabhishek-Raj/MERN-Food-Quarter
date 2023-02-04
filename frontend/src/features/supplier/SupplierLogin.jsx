@@ -24,7 +24,6 @@ const SupplierLogin = () => {
 
   useEffect(() => {
     error && toast.error(error)
-    console.log(error)
     supplier && navigate('/supplier')
     
   }, [error, supplier, navigate])
@@ -43,6 +42,8 @@ const SupplierLogin = () => {
 
   return (
     <div className="selection:bg-rose-500 selection:text-white">
+      <img src="http://localhost:4000/images/3b98a838935dfa98dce575ca9b33db52" alt="" />
+      <h1>haithre</h1>
         <ToastContainer />
       <div className="min-h-screen bg-rose-100 flex justify-center items-center">
         <div className="p-8 flex-1">

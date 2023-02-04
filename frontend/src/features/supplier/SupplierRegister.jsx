@@ -47,10 +47,28 @@ const SupplierRegister = () => {
     }))
   }
 
+  const imageUpload = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.files[0]
+
+    }))
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault() 
-    dispatch(register({formData, navigate, toast}))
-
+    
+    const formData = new FormData()
+    formData.append('name', name)
+    formData.append('email', email)
+    formData.append('password', password)
+    formData.append('phone', phone)
+    formData.append('location', location)
+    formData.append('foodLicense', foodLicense)
+    formData.append('description', description)
+    formData.append('image', image)
+  
+    dispatch(register({ formData, navigate, toast }))
   }
 
 
@@ -96,7 +114,7 @@ const SupplierRegister = () => {
                   </div>
                   <div className="mt-10 relative w-1/3 flex">
                     <div className="flex-col items-center">
-                      <input id="password" type="file" name="foodLicense" value={foodLicense} onChange={onInputChange} className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-blue-600" placeholder="Password" />
+                      <input id="password" type="file" name="foodLicense" onChange={imageUpload} className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-blue-600" placeholder="Password" />
                       <label htmlFor="password" className="text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-800 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">FSSAI License</label>
                     </div>
                   </div>
@@ -108,7 +126,7 @@ const SupplierRegister = () => {
                   </div>
                   <div className="mt-10 relative w-1/3 flex">
                     <div className="flex-col items-center">
-                      <input id="password" type="file" name="image" value={image} onChange={onInputChange} className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-blue-600" placeholder="Password" />
+                      <input id="password" type="file" name="image" onChange={imageUpload} className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-blue-600" placeholder="Password" />
                       <label htmlFor="password" className="text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-800 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Images</label>
                     </div>
                   </div>

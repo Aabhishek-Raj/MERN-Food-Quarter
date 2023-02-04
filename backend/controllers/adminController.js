@@ -121,8 +121,26 @@ module.exports.getSupplierRequest = asyncHandler(async (req, res) => {
 //@route POST /blockuser
 //@access Private
 module.exports.blockUser = asyncHandler(async (req, res) => {
-    const userId = req.params
+    const {userId} = req.body
     console.log(userId)
+    console.log('blocking')
+
+    const user = await User.findByIdAndUpdate(userId, {isActive: false})
+
+    res.status(200).json({message: `${user?.username} has been blocked`}) 
+})
+
+//@desc unBlock an user
+//@route POST /unblockuser
+//@access Private
+module.exports.unBlockUser = asyncHandler(async (req, res) => {
+    const {userId} = req.body
+    console.log('unblockinggg')
+
+    const user = await User.findByIdAndUpdate(userId, {isActive: true})
+
+    res.status(200).json({message: `${user.username} has been Unblocked`})
+
 })
 
 //@desc Send Email
@@ -155,8 +173,6 @@ function sendEmail(){
     })
 }
 
-
-
 //@desc Verify the supplier
 //@route PATCH   /verifysupplier
 //@access Private
@@ -178,6 +194,30 @@ module.exports.rejectSupplier = asyncHandler(async (req, res) => {
 
 
     const supplier = await Supplier.findById(supplierId)
+})
 
+//@desc block Supplier
+//@route PATCH   /blocksupplier
+//@access Private
+module.exports.blockSupplier = asyncHandler(async (req, res) => {
+    const {supplierId} = req.body
+    console.log('blocking')
+
+    const supplier = await Supplier.findByIdAndUpdate(supplierId, {isActive: false})
+
+    res.status(200).json({message: `${supplier?.name} has been blocked`}) 
+
+})
+
+//@desc Unblock Supplier
+//@route PATCH   /unblocksupplier
+//@access Private
+module.exports.unBlockSupplier = asyncHandler(async (req, res) => {
+    const {supplierId} = req.body
+    console.log('Unblocking')
+ 
+    const supplier = await Supplier.findByIdAndUpdate(supplierId, {isActive: true})
+
+    res.status(200).json({message: `${supplier?.name} has been Unblocked`}) 
 
 })
