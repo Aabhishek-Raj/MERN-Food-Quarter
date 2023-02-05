@@ -37,7 +37,7 @@ const PackageDetails = ({user}) => {
             )
           }
         </div>
-        <div className='py-2 bg-blue-400 flex-1'></div>
+        {/* <div className='py-2 bg-blue-400 flex-1'></div> */}
       </div>
       <div className='max-w-[1640px] pt-16 mx-auto p-4 py-12 grid grid-cols-2 lg:grid-cols-4 gap-12'>
         {

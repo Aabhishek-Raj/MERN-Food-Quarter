@@ -10,7 +10,7 @@ router.get('/')
 
 
 
-router.post('/register',upload.single('image'), supplierController.register)
+router.post('/register',upload.single('license'), supplierController.register)
 router.post('/login', supplierController.login)
 
 module.exports = router

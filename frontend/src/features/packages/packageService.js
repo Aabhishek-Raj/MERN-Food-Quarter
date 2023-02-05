@@ -5,7 +5,8 @@ const API = axios.create({baseURL: 'http://localhost:4000/package'})
 export const createPackage = async (packageData, token) => {
     const config = {
         headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data'
         }
     }
     const response = await API.post('/create', packageData, config)

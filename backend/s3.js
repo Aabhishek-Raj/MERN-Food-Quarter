@@ -26,7 +26,9 @@ async function uploadFile(file) {
     }
 
     const result = await s3.upload(uploadParams).promise()
+    // res.send({imagePath: `/supplier/register/${result.Key}`})
     await unlinkFile(file.path)
+
     return result
 }
 
@@ -40,5 +42,19 @@ function getFilesStream(fileKey) {
     }
     return s3.getObject(downloadParams).createReadStream()
 }
+
 exports.getFilesStream = getFilesStream
 
+//Delete a file from s3
+async function deleteFile(fileKey){
+    const deleteParams = {
+        Bucket: bucketName,
+        Key: fileKey
+    }
+
+    await s3.deleteObject(deleteParams).promise()
+
+    return
+}
+
+exports.deleteFile = deleteFile

@@ -23,15 +23,21 @@ const CreatePackage = () => {
         setIsLoading(true)
         const imageFile = e.target.files[0]
         console.log(imageFile.name)
-        setImage(imageFile.name)
+        setImage(imageFile)
     }
 
     const deleteImage = () => {}
 
     const saveDetails = () => {
-        const obj = {packagename, variety, price, category, image}
 
-        dispatch(createPackage(obj))
+        const formData = new FormData()
+        formData.append('packagename', packagename)
+        formData.append('variety', variety)
+        formData.append('price', price)
+        formData.append('category', category)
+        formData.append('image', image)
+
+        dispatch(createPackage(formData))
 
     }
 

@@ -25,10 +25,7 @@ const supplierSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    foodLicense: {
-        type: String,
-    },
-    image: {
+    license: {
         type: String,
     },
     isVerified: {

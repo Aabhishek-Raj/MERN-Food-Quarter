@@ -25,13 +25,13 @@ const AddItems = () => {
     const uploadImage = (e) => {
         setIsLoading(true)
         const imageFile = e.target.files[0]
-        console.log(imageFile.name)
-        setFoodpic(imageFile.name)
+        setFoodpic(imageFile)
     }
 
     const deleteImage = () => {}
 
     const saveDetails = () => {
+
         const itemData = {itemname, amount, foodpic, calory}
         
         dispatch(addItem({itemData, id}))

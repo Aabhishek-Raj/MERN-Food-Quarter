@@ -1,11 +1,13 @@
 const asyncHandler = require('express-async-handler')
 const Package = require('../models/packageSchema')
+const { uploadFile } = require('../s3')
 
 // @desc Create new package
 // @route POST /create
 // @access Private
 module.exports.createPackage = asyncHandler(async (req, res) => {
-    const { packagename, variety, image, FootItems } = req.body
+    const { packagename, variety, price, category } = req.body
+    const image = req.file
 
     if (!packagename || !variety || !image) {
         return res.status(400).json({ message: 'All Fields are required' })
@@ -16,7 +18,13 @@ module.exports.createPackage = asyncHandler(async (req, res) => {
         return res.status(409).json({ message: "Package with same name exist" })
     }
 
-    const package = await Package.create({ supplierId: req.supplier.supplierId, packagename, variety, image })
+    const result = await uploadFile(image)
+
+    if (!result?.Key) {
+        return res.status(400).json({message: "Add another image"})
+    }
+
+    const package = await Package.create({ supplierId: req.supplier.supplierId, packagename, variety, image: result.Key })
 
     if (package) {
         res.status(200).json(package)

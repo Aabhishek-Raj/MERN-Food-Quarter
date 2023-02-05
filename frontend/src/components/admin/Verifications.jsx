@@ -58,13 +58,13 @@ const EachCard = (props) => {
               <MoreVertIcon />
             </IconButton>
           }
-          title={props.request.name}
+          title={props.request.license}
           subheader={props.request.email}
         />
         <CardMedia
           component="img"
           height="194"
-          image="https://mui.com/static/images/cards/paella.jpg"
+          image={`http://localhost:4000/images/${props.request.license}`}
           alt="Paella dish"
         />
         <CardContent>
