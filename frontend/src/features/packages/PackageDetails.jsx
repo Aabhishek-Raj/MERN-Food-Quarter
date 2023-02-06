@@ -1,14 +1,31 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import { useMemo } from 'react'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import SingleItem from '../../components/package/SingleItem'
+import { setPakages } from './packageSlice'
 
 const PackageDetails = ({user}) => {
 
   const { id } = useParams()
 
   const { packages } = useSelector((state) => state.package)
-  const pack = packages.find((pack) => pack._id === id)
+
+  const stored = JSON.parse(localStorage.getItem('package'));
+
+  const pack = useMemo(() => packages.find(p => p._id === id) || stored, [id, packages, stored]);
+ 
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    localStorage.setItem('package', JSON.stringify(pack))
+  }, [pack])
+
+  useEffect(() => {
+      dispatch(setPakages(pack))
+
+  }, [dispatch, pack]);
 
   return (
     <>

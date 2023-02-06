@@ -63,7 +63,10 @@ export const packageSlice = createSlice({
     name: 'package',
     initialState,
     reducers: {
-        reset: (state) => initialState
+        reset: (state) => initialState,
+        setPakages: (state, action) => {
+            state.packages.push(action.payload)
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -123,4 +126,7 @@ export const packageSlice = createSlice({
     }
 
 })
+
+export const {setPakages} = packageSlice.actions
+
 export default packageSlice.reducer
