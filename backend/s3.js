@@ -27,7 +27,7 @@ async function uploadFile(file) {
 
     const result = await s3.upload(uploadParams).promise()
     // res.send({imagePath: `/supplier/register/${result.Key}`})
-    await unlinkFile(file.path)
+    await unlinkFile(file.path) 
 
     return result
 }

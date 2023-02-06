@@ -51,7 +51,9 @@ module.exports.getPackages = asyncHandler( async (req, res) => {
 // @route POST /additem
 // @access Private
 module.exports.addItems = asyncHandler( async (req, res) => {
-    const { itemname, amount, foodpic, calory, id } = req.body
+    const { itemname, amount, calory} = req.body
+    const { id } = req.query
+    const foodpic = req.file
 
     if(!itemname || !amount || !foodpic || !calory || !id){
         return res.status(400).json({message: 'All fiels are Required'})
@@ -72,7 +74,15 @@ module.exports.addItems = asyncHandler( async (req, res) => {
         return res.status(401).json({message: 'Not authorized to edit this package'})
     }
 
-    const insertItem = await Package.findOneAndUpdate({_id: id}, {$push: {FoodItems: req.body}}, {new: true} )
+    const result = await uploadFile(foodpic)
+
+    if (!result?.Key) {
+        return res.status(400).json({message: "Upload another image"})
+    }
+
+    const items = {...req.body, foodpic: result.Key}
+
+    const insertItem = await Package.findOneAndUpdate({_id: id}, {$push: {FoodItems: items}}, {new: true} )
 
     res.status(200).json(insertItem)
 })

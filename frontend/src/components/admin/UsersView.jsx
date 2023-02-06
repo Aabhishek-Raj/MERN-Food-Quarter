@@ -77,8 +77,13 @@ const UsersView = () => {
       flex: 1,
     },
     {
+      field: "verified",
+      headerName: "Verified",
+      flex: 1,
+    },
+    {
       field: "accessLevel",
-      headerName: "Manage user",
+      headerName: "Manage",
       flex: 1,
       renderCell: ({ row: { _id, isActive } }) => {
         return (

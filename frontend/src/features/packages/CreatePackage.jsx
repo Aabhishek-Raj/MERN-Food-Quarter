@@ -96,7 +96,7 @@ const CreatePackage = () => {
 
                     <div className='w-full py-2 border-b border-gray-300 flex items-center gap-2 '>
                         <MdFoodBank className='text-gray-700 text-2xl'/>
-                        <input type="text" required value={variety} onChange={(e) => setVariety(e.target.value)} placeholder='Price' className='w-full h-full text-lg bg-transparent outline-none border-none placeholder:text-gray-400 text-gray-600 ' />
+                        <input type="text" required value={variety} onChange={(e) => setVariety(e.target.value)} placeholder='Variety' className='w-full h-full text-lg bg-transparent outline-none border-none placeholder:text-gray-400 text-gray-600 ' />
 
                     </div>
                 </div>

@@ -113,8 +113,7 @@ const EachCard = (props) => {
           <CardContent>
             <Typography paragraph>Method:</Typography>
             <Typography paragraph>
-              Heat 1/2 cup of the broth in a pot until simmering, add saffron and set
-              aside for 10 minutes.
+            <a href={`http://localhost:4000/images/${props.request.license}`}>click here to view the details</a>
             </Typography>
             <Typography paragraph>
               Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over

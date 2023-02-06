@@ -19,7 +19,7 @@ module.exports.register = asyncHandler(async(req, res) => {
 
     const emailduplicate = await Supplier.findOne({email}).lean().exec()
     const nameduplicate = await Supplier.findOne({name}).lean().exec()
-    
+
     if(emailduplicate || nameduplicate) {
         return res.status(409).json({message: "An Account with same company details exist"})
     }
@@ -82,7 +82,7 @@ module.exports.login = asyncHandler( async (req, res) => {
             }
         },
         process.env.SUPPLIER_TOKEN,
-        {expiresIn: '10d'}
+        {expiresIn: '10d'} 
     )
 
     res.status(200).json({ supplier: foundSupplier, SupplierToken})

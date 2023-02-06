@@ -22,11 +22,12 @@ export const createPackage = createAsyncThunk('package/create', async(packageDat
 })
 
 //Add items to the Package
-export const addItem = createAsyncThunk('package/additem', async({itemData, id}, thunkAPI) => {
+export const addItem = createAsyncThunk('package/additem', async({formData, id}, thunkAPI) => {
+
     try{
         const token = thunkAPI.getState().supplier.supplier.SupplierToken
 
-        return await packageService.addItem(itemData, id, token)
+        return await packageService.addItem(formData, id, token)
 
     } catch(err){
         return thunkAPI.rejectWithValue(err.response.data)

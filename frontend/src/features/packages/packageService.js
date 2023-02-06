@@ -14,13 +14,16 @@ export const createPackage = async (packageData, token) => {
 }
 
 export const addItem = async (itemData, id, token) => {
-    console.log(itemData, id )
     const config = {
         headers: {
-            Authorization: `Bearer ${token}`   
+            Authorization: `Bearer ${token}` ,
+            'Content-Type': 'multipart/form-data'  
+        },
+        params: {
+            id
         }
     }
-    const response = await API.post('/additem', {...itemData, id}, config)
+    const response = await API.post('/additem', itemData, config)
     return response.data
 }
 

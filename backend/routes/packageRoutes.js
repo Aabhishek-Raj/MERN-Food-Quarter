@@ -7,7 +7,7 @@ const upload = multer({ dest: 'uploads/' })
  
 router.post('/create', supplierProtect, upload.single('image'), packageController.createPackage)
 router.get('/getpacks', supplierProtect, packageController.getPackages)
-router.post('/additem', supplierProtect, packageController.addItems)
+router.post('/additem', supplierProtect,upload.single('foodpic'), packageController.addItems)
 router.get('/getall', protect, packageController.getAllPackages)
 
 

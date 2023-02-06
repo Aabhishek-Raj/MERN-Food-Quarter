@@ -17,7 +17,7 @@ const SuppliersView = () => {
   const [suppliers, setSuppliers] = useState()
   const colors = tokens(theme.palette.mode);
 
-  async function fetchData(){
+  async function fetchData() {
 
     const data = await getVerifiedSuppliers()
     setSuppliers(data)
@@ -26,7 +26,7 @@ const SuppliersView = () => {
   useEffect(() => {
 
     fetchData()
-  },[])
+  }, [])
 
   const handleBlock = async (supplierId, manage) => {
     const result = await blockSupplier(supplierId, manage)
@@ -34,16 +34,17 @@ const SuppliersView = () => {
     fetchData()
   }
 
-  if(!suppliers){
+  if (!suppliers) {
     return <div>No Suppliers present</div>
   }
 
   const data = suppliers.map(supplier => {
     return {
-      ...supplier, 
+      ...supplier,
       id: supplier._id.replace(/_/g, "")
-  }
+    }
   })
+
 
   const columns = [
     // { field: "id", headerName: "Registrar ID" },
@@ -75,15 +76,16 @@ const SuppliersView = () => {
       flex: 1,
     },
     {
-      field: "foodLicense",
+      field: "license",
       headerName: "License",
       flex: 1,
+      cellRenderer: ({ row: { license } }) => <a href={`http://localhost:4000/images/${license}`} target="_blank" rel="noopener noreferrer"><img src={`http://localhost:4000/images/${license}`} alt="" />Click here</a>
     },
-    {
-      field: "image",
-      headerName: "Image",
-      flex: 1,
-    },
+    // {
+    //   field: "image",
+    //   headerName: "Image",
+    //   flex: 1,
+    // },
     {
       field: "isVerified",
       headerName: "Verified",
@@ -105,16 +107,16 @@ const SuppliersView = () => {
             p="3px"
             display="flex"
             justifyContent="center"
-            backgroundColor={ colors.greenAccent[600] }
+            backgroundColor={colors.greenAccent[600]}
             borderRadius="4px"
           >
-            { isActive && <Button onClick={((e) => handleBlock(_id, 'Block'))}><LockOpenOutlinedIcon /></Button>}
-            { !isActive && <Button onClick={((e) => handleBlock(_id, 'UnBlock'))}><HiOutlineLockClosed /></Button>}
+            {isActive && <Button onClick={((e) => handleBlock(_id, 'Block'))}><LockOpenOutlinedIcon /></Button>}
+            {!isActive && <Button onClick={((e) => handleBlock(_id, 'UnBlock'))}><HiOutlineLockClosed /></Button>}
 
             {/* {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
             {access === "manager" && <SecurityOutlinedIcon />}
             {access === "user" && <LockOpenOutlinedIcon />} */}
-            
+
             {/* <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
               {_id}
             </Typography> */}

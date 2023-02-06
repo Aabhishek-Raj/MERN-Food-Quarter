@@ -32,9 +32,13 @@ const AddItems = () => {
 
     const saveDetails = () => {
 
-        const itemData = {itemname, amount, foodpic, calory}
+        const formData = new FormData()
+        formData.append('itemname', itemname)
+        formData.append('amount', amount)
+        formData.append('foodpic', foodpic)
+        formData.append('calory', calory)
         
-        dispatch(addItem({itemData, id}))
+        dispatch(addItem({formData, id}))
 
     }
 
