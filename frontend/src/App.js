@@ -5,11 +5,11 @@ import DashLayout from "./components/DashLayout";
 import Welcome from "./features/auth/Welcome";
 // import Package from "./features/packages/Package";
 import Public from './components/Public';
-import UsersList from './features/users/UsersList'
+// import UsersList from './features/users/UsersList'
 import Register from './features/auth/Register';
 import AdminLogin from './features/admin/AdminLogin';
 import AdminLayout from './features/admin/AdminLayout';
-import PackageDetails from './features/packages/PackageDetails';
+import SuppliersFood from './features/food/SuppliersFood';
 
 // import { ColorModeContext, useMode } from './components/admin/theme';
 // import { CssBaseline, ThemeProvider } from '@mui/material';
@@ -30,11 +30,12 @@ import SupplierRegister from './features/supplier/SupplierRegister';
 import SupplierLogin from './features/supplier/SupplierLogin';
 import UsersView from './components/admin/UsersView';
 import { ToastContainer } from 'react-toastify';
-import CreatePackage from './features/packages/CreatePackage';
-import AddItems from './features/packages/AddItems';
+import AddItems from './features/food/AddItems'; 
 import EmailVerify from './features/auth/EmailVerify';
 import Reset from './features/auth/Reset';
 import ChangePwd from './features/auth/ChangePwd';
+import CreateFood from './features/food/CreateFood'
+import ManagePackage from './features/order/ManagePackage';
 
 
 
@@ -52,7 +53,7 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="dash" element={<DashLayout />}>
             <Route index element={<Welcome />} />
-            <Route path='package/:id' element={<PackageDetails user={true}/>} />
+            <Route path='foods/:id' element={<SuppliersFood user={true}/>} />
 
 
           </Route>  {/* End of Dash */}
@@ -61,9 +62,10 @@ function App() {
         {/* Supplier */}
         <Route path='/supplier' element={<SupplierLayout />}>
           <Route index element={<SupplierHome />} />
-          <Route path="create" element={<CreatePackage />} />
+          <Route path="create" element={<CreateFood/>} />
+          <Route path="order" element={<ManagePackage/>} />
           <Route path="additems/:id" element={<AddItems />} />
-          <Route path="package/:id" element={<PackageDetails />} />
+          <Route path="package/:id" element={<SuppliersFood />} />
           <Route path="register" element={<SupplierRegister />} />
           <Route path="login" element={<SupplierLogin />} />
         </Route>

@@ -3,18 +3,15 @@ import { motion } from 'framer-motion'
 import { MdFastfood, MdCloudUpload, MdDelete, MdFoodBank, MdAttachMoney } from 'react-icons/md'
 import Loader from '../../components/package/Loader'
 import { useDispatch } from 'react-redux'
-import { addItem } from './packageSlice'
-import { useParams } from 'react-router-dom'
+import { createFood } from './foodSlice'
 
-const AddItems = () => {
+const CreateFood = () => {
 
-    const { id } = useParams()
-
-    const [itemname, setPackagename] = useState('')
+    const [name, setName] = useState('')
     const [variety, setVariety] = useState('')
-    const [amount, setAmount] = useState('')
-    const [calory, setCalory] = useState(null)
-    const [foodpic, setFoodpic] = useState(null)
+    const [price, setPrice] = useState('')
+    const [category, setCategory] = useState(null)
+    const [image, setImage] = useState(null)
     const [fields, setFields] = useState(false)
     const [alertStatus, setAlertStatus] = useState("danger")
     const [msg, setMsg] = useState(null)
@@ -25,7 +22,8 @@ const AddItems = () => {
     const uploadImage = (e) => {
         setIsLoading(true)
         const imageFile = e.target.files[0]
-        setFoodpic(imageFile)
+        console.log(imageFile.name)
+        setImage(imageFile)
     }
 
     const deleteImage = () => {}
@@ -33,12 +31,13 @@ const AddItems = () => {
     const saveDetails = () => {
 
         const formData = new FormData()
-        formData.append('itemname', itemname)
-        formData.append('amount', amount)
-        formData.append('foodpic', foodpic)
-        formData.append('calory', calory)
-        
-        dispatch(addItem({formData, id}))
+        formData.append('name', name)
+        formData.append('variety', variety)
+        formData.append('price', price)
+        formData.append('category', category)
+        formData.append('image', image)
+
+        dispatch(createFood(formData))
 
     }
 
@@ -56,33 +55,33 @@ const AddItems = () => {
                 }
                 <div className='w-full py-2 border-b border-green-300 flex items-center gap-2 '>
                     <MdFastfood className='text-xl text-gray-700' />
-                    <input type="text" required name='packagename' value={itemname}
-                        onChange={(e) => setPackagename(e.target.value)}
-                        placeholder='Give your Dish name...' className='w-full h-full text-lg bg-transparent font-semibold outline-none border-none placeholder:text-gray-400 text-gray-600' />
+                    <input type="text" required name='name' value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder='Give a food name...' className='w-full h-full text-lg bg-transparent font-semibold outline-none border-none placeholder:text-gray-400 text-gray-600' />
                 </div>
-                {/* <div className='w-full'>
+                <div className='w-full'>
                     <select onChange={(e) => setCategory(e.target.value)} className="outline-none w-full text-base border-b-2 border-gray-200 p-2 rounded-md cursor-pointer">
                         <option value="other" className='bg-white'> Select Category</option>
                         {category && category.map(item => (
                             <option key={item.id} className="text-base border-0 outline-none capitalize bg-white text-gray-500" value="item.urlParamName"></option>
                         ))}
                     </select>
-                </div> */}
+                </div>
 
                 <div className='group flex justify-center items-center flex-col border-2 border-dotted border-gray-300 w-full h-96 md:h-96 cursor-pointer rounded-lg'>
                     {isloading ? <Loader />: <>
-                    {!foodpic ? <>
+                    {!image ? <>
                     <label className='w-full h-full flex flex-col items-center justify-center cursor-pointer'>
                         <div className='w-full h-full flex flex-col items-center justify-center gap-2'>
                             <MdCloudUpload className='text-gray-500 text-3xl hover:text-gray-700' /> 
-                            <p className='text-gray-500 hover:text-gray-700'>Click here to Upload an image</p>
+                            <p className='text-gray-500 hover:text-gray-700'>Click here to Upload</p>
 
                         </div>
                         <input type="file" name='uploadimage' accept='image/*' onChange={uploadImage} className='w-0 h-0'/>
                     </label>
                     </>: <>
                     <div className='relative h-full '>
-                        <img className='w-full h-full object-cover ' src={foodpic} alt="uploaded img" />
+                        <img className='w-full h-full object-cover ' src={image} alt="uploaded img" />
                         <button type='button' className='absolute bottom-3 right-3 p-3 rounded-full bg-red-500 text-xl cursor-pointer outline-none hover:shadow-md duration-500 transition-all ease-in-out' onClick={deleteImage}><MdDelete className='text-white '/></button>
                     </div>
                     </>}
@@ -92,18 +91,18 @@ const AddItems = () => {
                 <div className='w-full flex flex-col md:flex-row items-center gap-3 '>
                     <div className='w-full py-2 border-b border-gray-300 flex items-center gap-2 '>
                         <MdAttachMoney className='text-gray-700 text-2xl'/>
-                        <input type="text" required value={amount} onChange={(e) => setAmount(e.target.value)} placeholder='Amount' className='w-full h-full text-lg bg-transparent outline-none border-none placeholder:text-gray-400 text-gray-600 ' />
+                        <input type="text" required value={price} onChange={(e) => setPrice(e.target.value)} placeholder='amount' className='w-full h-full text-lg bg-transparent outline-none border-none placeholder:text-gray-400 text-gray-600 ' />
                     </div>
 
                     <div className='w-full py-2 border-b border-gray-300 flex items-center gap-2 '>
                         <MdFoodBank className='text-gray-700 text-2xl'/>
-                        <input type="text" required value={calory} onChange={(e) => setCalory(e.target.value)} placeholder='Calories' className='w-full h-full text-lg bg-transparent outline-none border-none placeholder:text-gray-400 text-gray-600 ' />
+                        <input type="text" required value={variety} onChange={(e) => setVariety(e.target.value)} placeholder='Variety' className='w-full h-full text-lg bg-transparent outline-none border-none placeholder:text-gray-400 text-gray-600 ' />
 
                     </div>
                 </div>
 
                 <div className='flex items-center w-full'>
-                    <button type='button' className='ml-0 md:ml-auto w-full md:w-auto border-none outline-none bg-emerald-500 px-12 py-2 rounded-lg text-lg text-white font-semibold' onClick={saveDetails}>Add</button>
+                    <button type='button' className='ml-0 md:ml-auto w-full md:w-auto border-none outline-none bg-emerald-500 px-12 py-2 rounded-lg text-lg text-white font-semibold' onClick={saveDetails}>Create</button>
                 </div>
 
             </div>
@@ -111,4 +110,4 @@ const AddItems = () => {
     )
 }
 
-export default AddItems
+export default CreateFood

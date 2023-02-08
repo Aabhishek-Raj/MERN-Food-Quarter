@@ -8,6 +8,7 @@ router.post('/signin', userController.signin)
 router.get('/verify/:userId/:OTP', userController.verifyEmail)
 router.post('/resetpassword', userController.resetPassword)
 router.post('/changepassword', userController.changePassword)
+router.get('/allsuppliers', protect, userController.getAllSuppliers)
 
 
 module.exports = router      

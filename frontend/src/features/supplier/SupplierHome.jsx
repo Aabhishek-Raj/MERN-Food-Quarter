@@ -4,12 +4,12 @@ import Singlepack from "../../components/package/Singlepack"
 import { MdCreate } from "react-icons/md"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getPackages } from "../packages/packageSlice"
+import { getFoods } from "../food/foodSlice"
 
 
 const SupplierHome = () => {
 
-  const { packages } = useSelector((state) => state.package)
+  const { foods } = useSelector((state) => state.food)
 
   const { packageId } = useParams()
 
@@ -17,7 +17,7 @@ const SupplierHome = () => {
 
   useEffect(() => {
 
-    dispatch(getPackages()) 
+    dispatch(getFoods()) 
 
   }, [dispatch])  
 
@@ -43,11 +43,11 @@ const SupplierHome = () => {
 
         {/* headlineCard  */}
         <p className="font-bold text-2xl px-2 pt-4 mt-10">My Packages</p>
-        {packages.length > 0 ? (
+        {foods.length > 0 ? (
           <div className="max-w-[1640px] mx-auto p-4 py-12 grid md:grid-cols-3 gap-6">
 
-            {packages.map(pack => (
-              <Singlepack key={pack._id} pack={pack} />
+            {foods.map(food => (
+              <Singlepack key={food._id} food={food} />
 
             ))}
 

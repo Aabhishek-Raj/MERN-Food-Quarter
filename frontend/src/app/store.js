@@ -3,7 +3,7 @@ import { apiSlice } from "./api/apiSlice";
 import AuthReducer from '../features/auth/authSlice'
 import AdminReducer from '../features/admin/adminSlice'
 import SupplierReducer from '../features/supplier/supplierSlice'
-import PackageReducer from "../features/packages/packageSlice";
+import FoodReducer from "../features/food/foodSlice";
 
 
 export const store = configureStore({
@@ -12,7 +12,7 @@ export const store = configureStore({
         auth: AuthReducer,
         adminAuth: AdminReducer,
         supplier: SupplierReducer, 
-        package: PackageReducer
+        food: FoodReducer
     },
     middleware: getDefaultMiddleware => 
         getDefaultMiddleware().concat(apiSlice.middleware), 

@@ -58,7 +58,7 @@ const EachCard = (props) => {
               <MoreVertIcon />
             </IconButton>
           }
-          title={props.request.license}
+          title={props.request.name}
           subheader={props.request.email}
         />
         <CardMedia
@@ -71,10 +71,10 @@ const EachCard = (props) => {
           <Typography variant="body2" color="text.secondary">
  
           </Typography>
-          <Typography>Id no:  {props.request._id}</Typography>
+          <Typography>Phone no:  {props.request.phone}</Typography>
           <Typography>Supply Location:  {props.request.location}</Typography>
           <Typography>
-            terms & conditions: {props.request.description}
+            Description: {props.request.description}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
@@ -111,11 +111,11 @@ const EachCard = (props) => {
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography paragraph>Method:</Typography>
+            <Typography paragraph>More Details:</Typography>
             <Typography paragraph>
-            <a href={`http://localhost:4000/images/${props.request.license}`}>click here to view the details</a>
+            <a href={`http://localhost:4000/images/${props.request.license}`}>click here to view the details....</a>
             </Typography>
-            <Typography paragraph>
+            {/* <Typography paragraph>
               Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over
               medium-high heat. Add chicken, shrimp and chorizo, and cook, stirring
               occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp to a
@@ -134,7 +134,7 @@ const EachCard = (props) => {
             </Typography>
             <Typography>
               Set aside off of the heat to let rest for 10 minutes, and then serve.
-            </Typography>
+            </Typography> */}
           </CardContent>
         </Collapse>
       </Card>

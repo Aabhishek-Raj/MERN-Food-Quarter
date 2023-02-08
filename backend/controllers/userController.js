@@ -8,6 +8,7 @@ const { v4: uuidv4 } = require('uuid')
 const path = require('node:path')
 const Pwdreset = require('../models/pwdresetSchema')
 const { accessSync } = require('node:fs')
+const Supplier = require('../models/supplierSchema')
 
 //@desc Send a mail
 //@route nodemailer
@@ -406,4 +407,19 @@ module.exports.deleteUsers = asyncHandler(async (req, res) => {
 
     const replay = `User ${deleted.username} with id ${deleted.id} is deleted`
     res.json(replay)
+})
+
+//@desc Get top suppliers
+//@route GET /topsuppliers
+//@access Private
+module.exports.getAllSuppliers = asyncHandler( async (req, res) => {
+    
+    const supplier = await Supplier.find({ isVerified: true, isActive: true }).select('-password').lean().exec()
+
+    if (!supplier?.length) {
+        return res.status(400).json({ message: 'No Supplier Found' })
+    }
+
+    res.status(200).json(supplier)
+
 })

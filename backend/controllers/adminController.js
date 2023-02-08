@@ -109,6 +109,7 @@ module.exports.getVerifiedSuppliers = asyncHandler(async (req, res) => {
 //@route GET /notverified
 //@access Private
 module.exports.getSupplierRequest = asyncHandler(async (req, res) => {
+    
     const supplier = await Supplier.find({ isVerified: false }).select('-password').lean().exec()
 
     if (!supplier?.length) {
@@ -135,7 +136,7 @@ module.exports.blockUser = asyncHandler(async (req, res) => {
 //@access Private
 module.exports.unBlockUser = asyncHandler(async (req, res) => {
     const {userId} = req.body
-    console.log('unblockinggg')
+    console.log('unblocking')
 
     const user = await User.findByIdAndUpdate(userId, {isActive: true})
 
@@ -201,7 +202,6 @@ module.exports.rejectSupplier = asyncHandler(async (req, res) => {
 //@access Private
 module.exports.blockSupplier = asyncHandler(async (req, res) => {
     const {supplierId} = req.body
-    console.log('blocking')
 
     const supplier = await Supplier.findByIdAndUpdate(supplierId, {isActive: false})
 
@@ -214,7 +214,6 @@ module.exports.blockSupplier = asyncHandler(async (req, res) => {
 //@access Private
 module.exports.unBlockSupplier = asyncHandler(async (req, res) => {
     const {supplierId} = req.body
-    console.log('Unblocking')
  
     const supplier = await Supplier.findByIdAndUpdate(supplierId, {isActive: true})
 

@@ -30,7 +30,7 @@ app.use('/images', require('./controllers/imageController'))
 app.use('/users', require('./routes/userRoutes'))
 app.use('/admin', require('./routes/adminRoutes'))
 app.use('/supplier', require('./routes/supplierRoutes'))
-app.use('/package', require('./routes/packageRoutes'))
+app.use('/food', require('./routes/foodRoutes'))
 
 app.all('*', (req, res) => {
     res.status(404)

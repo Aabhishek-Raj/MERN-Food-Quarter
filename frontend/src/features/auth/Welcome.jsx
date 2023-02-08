@@ -5,23 +5,31 @@ import { useDispatch, useSelector } from 'react-redux'
 import PackageCard from '../../components/PackageCard'
 import Sidebar from '../../components/Sidebar'
 import TopSupplier from '../../components/TopSupplier'
-import PackageDetails from '../packages/PackageDetails'
-import { getAllPackages } from '../packages/packageSlice'
+import PackageDetails from '../food/SuppliersFood'
+import { getAllSuppliers } from '../auth/authService'
+import { reset } from '../food/foodSlice'
 
 
 const Welcome = () => {
 
-  // const [packview, setPackview] = useState(false)
+  const [suppliers, setSuppliers] = useState()
 
-  const { packages } = useSelector((state) => state.package)
+  const { foods } = useSelector((state) => state.food)
 
   const dispatch = useDispatch()
 
-  useEffect(() => {
+  const fetchData = async () => {
+    const suppliers = await getAllSuppliers()
+    setSuppliers(suppliers)
+  }
 
-    dispatch(getAllPackages())
-    
-  }, [dispatch])  
+  useEffect(() => {
+    fetchData()
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(reset())
+  }, [dispatch])
 
 
   const category = 'All'
@@ -51,18 +59,16 @@ const Welcome = () => {
               </div>
 
               <div className='flex flex-wrap sm:justify-start justify-center gap-8'>
-                {packages.length > 0 ? (
-                  packages.map(pack => (
-                    <PackageCard  key={pack._id} pack={pack}/>
-
+                {suppliers && (
+                  suppliers.map(supplier => (
+                    <PackageCard key={supplier._id} supplier={supplier} />
                   ))
-
-                ): (
-                  <h3>Sorry!! There is no packages available</h3>
-
                 )}
+                {
+                  !suppliers && (
+                    <h3>Sorry!! There is no packages available</h3>
 
-
+                  )}
               </div>
             </div>
             {/* route end */}

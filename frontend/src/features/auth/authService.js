@@ -12,3 +12,22 @@ export const changePassword = (formData) => API.post('/changepassword', formData
 export const removeuser = () => {
     localStorage.removeItem('profile')
 }
+
+
+export const getAllSuppliers = async () => {
+    const storageData = await JSON.parse(localStorage.getItem('profile'))
+    
+    try {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${storageData.Token}`
+            }
+        }
+
+        const response = await API.get('/allsuppliers', config)
+        return response.data
+
+    } catch (error) {
+        console.log(error.data.message)
+    }
+}
