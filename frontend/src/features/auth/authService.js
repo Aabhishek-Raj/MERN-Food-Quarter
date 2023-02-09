@@ -9,6 +9,8 @@ export const signUp = (formData) => API.post('/signup', formData)
 export const resetRequest = (formData) => API.post('/resetpassword', {...formData, redirectUrl: baseURL})
 export const changePassword = (formData) => API.post('/changepassword', formData)
 
+export const resendEmail = (data) => API.post('resendemail', data)
+
 export const removeuser = () => {
     localStorage.removeItem('profile')
 }

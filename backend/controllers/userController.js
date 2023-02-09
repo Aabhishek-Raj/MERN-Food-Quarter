@@ -88,7 +88,7 @@ const sendVerificationEmail = ({ _id, email }, res) => {
         from: process.env.AUTH_EMAIL,
         to: email,
         subject: "Verify Your Email",
-        html: `<p>Verify your email address to complete the signup and login into you account.</p><p>This link <b>expires in 6 hours</b>.</p><p>Press <a href=${currentUrl + "users/verify/" + _id + "/" + OTP}> here</a> to proceed.</P>`,
+        html: `<p>Verify your email address to complete the signup and login into you account.</p><p>This link <b>expires in 3 Minutes</b>.</p><p>Press <a href=${currentUrl + "users/verify/" + _id + "/" + OTP}> here</a> to proceed.</P>`,
     }
 
     const saltRounds = 10
@@ -99,7 +99,7 @@ const sendVerificationEmail = ({ _id, email }, res) => {
                 userId: _id,
                 OTP: hashedOTP,
                 createdAt: Date.now(),
-                expiresAt: Date.now() + 21600000,
+                expiresAt: Date.now() + 120 * 1000,
             })
 
             newVerification
@@ -109,7 +109,7 @@ const sendVerificationEmail = ({ _id, email }, res) => {
                         .sendMail(mailOptions)
                         .then(() => {
                             // email send and verification record saved
-                            res.status(250).json({ message: "Verification email send" })
+                            res.status(200).json({ message: "Verification email send", _id, email})
                         })
                         .catch((error) => {
                             console.log(error)
@@ -219,6 +219,21 @@ module.exports.verifyEmail = (req, res) => {
 
         })
 }
+
+//@desc verify email
+//@route GET /verify
+//@access Public
+module.exports.resendEmail = asyncHandler( async (req, res) => {
+    const { _id, email } = req.body
+
+    if(!_id || !email ) {
+        return res.status(400).json({message: "Error occured in resending "})
+    }
+
+    await Verification.deleteMany({userId: _id})
+    sendVerificationEmail({_id, email}, res)
+
+})
 
 //@desc Login
 //@route POST /auth

@@ -26,12 +26,22 @@ export const register = createAsyncThunk('auth/register', async ({formValue, nav
     try {
         const response = await authService.signUp(formValue)
         toast.success('Registered Succesfully')
-        navigate('/verify')
+        const {_id, email } = response.data
+        navigate('/verify', { state: {_id, email}})
         return response.data
 
     } catch (err) {
         console.log(err.response.data)
         return rejectWithValue(err.response.data)
+    }
+})
+
+export const resendEmail = createAsyncThunk('auth/resend', async (data, thunkAPI) => {
+    try{
+        const response = await authService.resendEmail(data)
+        return response.data
+    } catch(err){
+        return thunkAPI.rejectWithValue(err.response.data)
     }
 })
 
