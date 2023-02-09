@@ -35,7 +35,7 @@ import EmailVerify from './features/auth/EmailVerify';
 import Reset from './features/auth/Reset';
 import ChangePwd from './features/auth/ChangePwd';
 import CreateFood from './features/food/CreateFood'
-import ManagePackage from './features/order/ManagePackage';
+import ManagePackage from './features/package/ManagePackage';
 
 
 
@@ -53,7 +53,8 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="dash" element={<DashLayout />}>
             <Route index element={<Welcome />} />
-            <Route path='foods/:id' element={<SuppliersFood user={true}/>} />
+            <Route path='foods/:id' element={<SuppliersFood/>} />
+            <Route path='package/:id' element={<ManagePackage/>} />
 
 
           </Route>  {/* End of Dash */}
@@ -65,7 +66,7 @@ function App() {
           <Route path="create" element={<CreateFood/>} />
           <Route path="order" element={<ManagePackage/>} />
           <Route path="additems/:id" element={<AddItems />} />
-          <Route path="package/:id" element={<SuppliersFood />} />
+          {/* <Route path="package/:id" element={<SuppliersFood />} /> */}
           <Route path="register" element={<SupplierRegister />} />
           <Route path="login" element={<SupplierLogin />} />
         </Route>

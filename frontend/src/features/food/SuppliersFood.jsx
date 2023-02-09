@@ -35,18 +35,11 @@ const SuppliersFood = ({ user }) => {
           <p className='text-[2.5rem] md:text-[4.5rem] font-bold tracking-wide text-headingColor'> The Fastest Delivery in <span className='text-orange-600 text-[3rem] md:text-[5rem]'>{supplyFood.packagename}</span></p>
           <p className='text-base text-gray-500 text-center md:text-left md:w-[80%]'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium, aut?</p>
 
-          {
-            user ? (
-              <Link to={`/supplier/additems/${id}`}>
-                <button type='button' className='bg-gradient-to-br from-orange-400 to-orange-500 w-full md:w-auto px-4 py-2 rounded-lg hover:shadow-lg transition-all ease-in-out duration-100'>BOOK this package</button>
-              </Link>
-            ) : (
-              <Link to={`/supplier/additems/${id}`}>
-                <button type='button' className='bg-gradient-to-br from-orange-400 to-orange-500 w-full md:w-auto px-4 py-2 rounded-lg hover:shadow-lg transition-all ease-in-out duration-100'>Add more products</button>
+         
+              <Link to={`/dash/package/${id}`}>
+                <button type='button' className='bg-gradient-to-br from-orange-400 to-orange-500 w-full md:w-auto px-4 py-2 rounded-lg hover:shadow-lg transition-all ease-in-out duration-100'>View package</button>
               </Link>
 
-            )
-          }
         </div>
         {/* <div className='py-2 bg-blue-400 flex-1'></div> */}
       </div>

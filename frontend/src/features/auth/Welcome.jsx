@@ -34,12 +34,14 @@ const Welcome = () => {
 
   const category = 'All'
   return (
+    <>
 
 
+{/* 
     <div className="relative flex bg-gradient-to-br from-[#a6d1e6] to-[#44abda]">
       <Sidebar />
 
-      <div className="flex-1 flex flex-col bg-gradient-to-br from-[#a6d1e6] to-[#daecf4]">
+      <div className="flex-1 flex flex-col bg-gradient-to-br from-[#a6d1e6] to-[#daecf4]"> */}
         {/* <Searchbar /> */}
 
         <div className="px-6 h-[calc(100vh-72px)] overflow-y-scroll hide-scrollbar flex xl:flex-row flex-col-reverse">
@@ -78,13 +80,15 @@ const Welcome = () => {
             <TopSupplier />
           </div>
         </div>
-      </div>
+      {/* </div> */}
 
       {/* {activeSong?.title && ( */}
       <div className="">
         {/* <MusicPlayer /> */}
       </div>
-    </div>
+    {/* </div> */}
+
+    </>
   )
 }
 

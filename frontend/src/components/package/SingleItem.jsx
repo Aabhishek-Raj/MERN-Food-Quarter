@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { addToPackage } from '../../features/order/orderSlice'
+import { addToPackage } from '../../features/package/packageSlice'
 
 const SingleItem = ({item}) => {
 

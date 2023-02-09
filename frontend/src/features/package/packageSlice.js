@@ -1,10 +1,12 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
-const initialState = {}
+const packages = JSON.parse(localStorage.getItem('packages')) || {}
 
-const orderSlice = createSlice({
-    name: 'order',
+const initialState = packages 
+
+const packageSlice = createSlice({
+    name: 'packages',
     initialState,
     reducers: {
         addToPackage: (state, action) => {
@@ -31,10 +33,25 @@ const orderSlice = createSlice({
                     // state[supplierId].quantity++
                 }
             }
+
+            localStorage.setItem('packages', JSON.stringify(state))
+        },
+        deleteFromPackage: (state, action) => {
+            const { supplierId, item } = action.payload
+            console.log(item)
+
+            const deleted = state[supplierId].items.filter(each => (
+                each._id !== item._id
+            ))
+            state[supplierId].items = deleted
+
+            localStorage.setItem('packages', JSON.stringify(state))
+
+            
         }   
     }
 })
 
-export const { addToPackage } = orderSlice.actions
+export const { addToPackage, deleteFromPackage } = packageSlice.actions
 
-export default orderSlice.reducer
+export default packageSlice.reducer
