@@ -10,10 +10,13 @@ const corsOptions = require('./config/corsOption')
 const connectDB = require('./config/dbConn')
 const mongoose = require('mongoose')
 const PORT = process.env.PORT || 4000
+const allowedOrigins = require('./config/allowedOrigins')
+const socketIO = require('socket.io');
 
 
 
-connectDB()
+
+connectDB() 
 
 app.use(logger) 
 
@@ -31,6 +34,8 @@ app.use('/users', require('./routes/userRoutes'))
 app.use('/admin', require('./routes/adminRoutes'))
 app.use('/supplier', require('./routes/supplierRoutes'))
 app.use('/food', require('./routes/foodRoutes'))
+app.use('/chats', require('./routes/chatRoutes'))
+
 
 app.all('*', (req, res) => {
     res.status(404)
@@ -45,11 +50,32 @@ app.all('*', (req, res) => {
 
 app.use(errorHandler)
 
+const io = socketIO()
+
+
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB')
-    app.listen(PORT, () => {console.log(`Server running on port ${PORT}`)})
+    const server = app.listen(PORT, () => {console.log(`Server running on port ${PORT}`)})
+
+    io.attach(server, {
+        pingTimeout: 6000,
+        cors: {
+            origin: allowedOrigins
+        }
+    })
 })
 
+io.on('connection', socket => {
+    console.log(`New socket connection from ${socket.handshake.address}`)
+
+    socket.on('setup', (userData) => {
+        socket.join(userData._id)
+        console.log(userData)
+        socket.emit('connected')
+    })
+})
+
+ 
 mongoose.connection.on('error', err => {
     console.log(err)
     logEvents(`${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`, 'mongoErrLog.log')

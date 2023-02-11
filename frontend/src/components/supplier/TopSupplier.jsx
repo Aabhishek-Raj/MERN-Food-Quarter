@@ -3,11 +3,9 @@ import { Link } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCards, FreeMode } from "swiper"
-
-
 import 'swiper/css'
 import 'swiper/css/free-mode'
-import { getAllSuppliers } from "../features/auth/authService"
+import { getAllSuppliers } from "../../features/user/userService"
 import { useState } from "react"
 
 

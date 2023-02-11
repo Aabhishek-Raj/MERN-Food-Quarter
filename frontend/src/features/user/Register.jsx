@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { register } from "./authSlice"
+import { register } from "./userSlice"
 import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.min.css'
 
@@ -11,8 +11,6 @@ const initialState = {
   email: '',
   password: '',
   confirmPassword: '',
-
-
 }
 
 const Register = () => {

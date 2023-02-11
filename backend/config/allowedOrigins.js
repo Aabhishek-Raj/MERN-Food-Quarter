@@ -1,4 +1,4 @@
-const allowedOrigins = [
+const   allowedOrigins = [
     'http://localhost:3000'
 ]
 

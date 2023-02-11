@@ -436,5 +436,5 @@ module.exports.getAllSuppliers = asyncHandler( async (req, res) => {
     }
 
     res.status(200).json(supplier)
-
 })
+

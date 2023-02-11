@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useLocation, useParams } from 'react-router-dom'
-import { resendEmail } from './authSlice'
+import { resendEmail } from './userSlice'
 
 const EmailVerify = (props) => {
 

@@ -4,10 +4,10 @@ import { Outlet, useNavigate } from "react-router-dom"
 // import Footer from "../../components/Footer"
 // import TopBar from "../../components/TopBar"
 
-import { ColorModeContext, useMode } from '../../components/admin/theme';
+import { ColorModeContext, useMode } from '../components/admin/theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import TopNav from '../../components/admin/TopNav'
-import SideNav from "../../components/admin/SideNav";
+import TopNav from '../components/admin/TopNav'
+import SideNav from "../components/admin/SideNav";
 
 
 const AdminLayout = () => {

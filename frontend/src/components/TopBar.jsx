@@ -4,7 +4,7 @@ import { BsChatSquareDots } from 'react-icons/bs'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { logout as supplierlogout } from '../features/supplier/supplierSlice'
-import { logout as userlogout } from '../features/auth/authSlice'
+import { logout as userlogout } from '../features/user/userSlice'
 
 const TopBar = ({ supplier, user }) => {
 

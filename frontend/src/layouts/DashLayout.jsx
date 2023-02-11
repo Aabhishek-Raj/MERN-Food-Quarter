@@ -1,9 +1,9 @@
 import { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { Outlet, useNavigate } from "react-router-dom"
-import Footer from "./Footer"
-import Sidebar from "./Sidebar"
-import TopBar from "./TopBar"
+import Footer from "../components/Footer"
+import Sidebar from "../components/supplier/Sidebar"
+import TopBar from "../components/TopBar"
 
 const DashLayout = () => {
 

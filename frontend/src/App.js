@@ -1,14 +1,14 @@
 import { Route, Routes } from 'react-router-dom'
-import Layout from "./components/Layout";
-import Login from "./features/auth/Login";
-import DashLayout from "./components/DashLayout";
-import Welcome from "./features/auth/Welcome";
+import Layout from "./layouts/Layout";
+import Login from "./features/user/Login";
+import DashLayout from "./layouts/DashLayout";
+import Welcome from "./features/user/Welcome";
 // import Package from "./features/packages/Package";
 import Public from './components/Public';
 // import UsersList from './features/users/UsersList'
-import Register from './features/auth/Register';
+import Register from './features/user/Register';
 import AdminLogin from './features/admin/AdminLogin';
-import AdminLayout from './features/admin/AdminLayout';
+import AdminLayout from './layouts/AdminLayout';
 import SuppliersFood from './features/food/SuppliersFood';
 
 // import { ColorModeContext, useMode } from './components/admin/theme';
@@ -25,17 +25,19 @@ import FAQ from './components/admin/FAQ';
 import Calendar from './components/admin/Calendar';
 import Geography from './components/admin/Geography';
 import SupplierHome from './features/supplier/SupplierHome';
-import SupplierLayout from './components/SupplierLayout';
+import SupplierLayout from './layouts/SupplierLayout';
 import SupplierRegister from './features/supplier/SupplierRegister';
 import SupplierLogin from './features/supplier/SupplierLogin';
 import UsersView from './components/admin/UsersView';
 import { ToastContainer } from 'react-toastify';
 import AddItems from './features/food/AddItems'; 
-import EmailVerify from './features/auth/EmailVerify';
-import Reset from './features/auth/Reset';
-import ChangePwd from './features/auth/ChangePwd';
+import EmailVerify from './features/user/EmailVerify';
+import Reset from './features/user/Reset';
+import ChangePwd from './features/user/ChangePwd';
 import CreateFood from './features/food/CreateFood'
 import ManagePackage from './features/package/ManagePackage';
+import SinlgeView from './features/food/SinlgeView';
+import ChatPage from './features/chat/ChatPage';
 
 
 
@@ -54,7 +56,9 @@ function App() {
           <Route path="dash" element={<DashLayout />}>
             <Route index element={<Welcome />} />
             <Route path='foods/:id' element={<SuppliersFood/>} />
+            <Route path='single/:id?' element={<SinlgeView/>} />
             <Route path='package/:id' element={<ManagePackage/>} />
+            <Route path="chat" element={<ChatPage />} />
 
 
           </Route>  {/* End of Dash */}

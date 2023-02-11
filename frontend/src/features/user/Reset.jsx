@@ -1,23 +1,22 @@
 import { useState, useEffect } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { login } from "./authSlice"
 import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.min.css'
+import { resetRequest } from "./userSlice"
 
 
 const initialState = {
-  email: '',
-  password: ''
+  email: ''
 }
 
-const Login = () => {
+const Reset = () => {
 
   const [formValue, setFormValue] = useState(initialState)
   
   const {error} = useSelector((state) => ({...state.auth}))
 
-  const { email, password } = formValue
+  const { email } = formValue
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -28,8 +27,8 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (email && password) {
-      dispatch(login({ formValue, navigate, toast}))
+    if (email) {
+      dispatch(resetRequest({ formValue, navigate, toast}))
     }
   }
 
@@ -50,28 +49,14 @@ const Login = () => {
               </svg>
             </div>
             <div className="px-10 pt-4 pb-8 bg-white rounded-tr-4xl">
-              <h1 className="text-2xl font-semibold text-gray-900">Welcome back!</h1>
+              <h1 className="text-2xl font-semibold text-gray-900">Password Reset</h1>
               <form className="mt-12" action="" method="POST">
                 <div className="relative">
                   <input id="email" name="email" type="text" value={email} onChange={onInputChange} required className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-blue-600" placeholder="john@doe.com" />
-                  <label for="email" class="absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Email address</label>
+                  <label for="email" class="absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Enter your Email address</label>
                 </div>
-                <div className="mt-10 relative">
-                  <input id="password" type="password" name="password" value={password} onChange={onInputChange} className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-blue-600" placeholder="Password" />
-                  <label for="password" className="absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Password</label>
-                </div>
-
-                <button onClick={handleSubmit} className="mt-20 px-4 py-2 rounded bg-rose-500 hover:bg-rose-400 text-white font-semibold text-center block w-full focus:outline-none focus:ring focus:ring-offset-2 focus:ring-blue-500 focus:ring-opacity-80 cursor-pointer" >Login</button>
+                <button onClick={handleSubmit} className="mt-20 px-4 py-2 rounded bg-rose-500 hover:bg-rose-400 text-white font-semibold text-center block w-full focus:outline-none focus:ring focus:ring-offset-2 focus:ring-blue-500 focus:ring-opacity-80 cursor-pointer" >Submit</button>
               </form>
-              <div className="flex justify-between">
-                
-              <Link to='/register'>
-                <p href="#" className="mt-4 block text-sm text-center font-medium text-blue-600-600 hover:underline focus:outline-none focus:ring-2 focus:ring-rose-500"> Don't have an acoount? Sign Up </p>
-              </Link>
-              <Link to='/reset'>
-                <p href="#" className="mt-4 block text-sm text-center font-medium text-blue-600-600 hover:underline focus:outline-none focus:ring-2 focus:ring-rose-500"> Forgotten password? Reset it. </p>
-              </Link>
-              </div>
             </div>
           </div>
         </div>
@@ -80,4 +65,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Reset

@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux"
 import { Outlet } from "react-router-dom"
-import Footer from "./Footer"
-import TopBar from "./TopBar"
+import Footer from "../components/Footer"
+import TopBar from "../components/TopBar"
 import { AiOutlineClose, AiOutlineSearch, AiFillTag, AiOutlineMenu } from 'react-icons/ai'
 import { BsFillCartFill, BsFillSave2Fill } from "react-icons/bs"
 import { TbTruckDelivery } from "react-icons/tb"

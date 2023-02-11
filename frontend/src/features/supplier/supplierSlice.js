@@ -8,8 +8,7 @@ const initialState = {
     error: '',
     loading: false
 }
-
-
+    
 export const register = createAsyncThunk('supplier/register', async ({formData, navigate, toast}, thunkAPI) => {
     try {
         // console.log(supplier)
