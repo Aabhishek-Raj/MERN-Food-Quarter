@@ -67,7 +67,7 @@ const ChatSide = () => {
               }
               {
                 chats && chats.map(chat => (
-                    <ChatCard key={chat._id} chat={chat}/>
+                    <ChatCard key={chat._id} chat={chat} handleFunction={() => dispatch(accessChat(chat._id))} />
                 ))  
               }
                            

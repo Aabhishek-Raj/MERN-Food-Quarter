@@ -69,7 +69,7 @@ const adminProtect = asyncHandler( async (req, res, next) => {
       next() 
     } catch (error) {
       res.status(401)
-      throw new Error('No admin authorization')   
+      throw new Error('No admin authorization')     
     }
   }
 

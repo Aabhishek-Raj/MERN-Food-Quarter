@@ -12,11 +12,8 @@ module.exports.accessChat = asyncHandler(async (req, res) => {
     }
 
     let chat = await Chat.find({
-        $and: [
-            { users: { $elemMatch: { $eq: req.user._id } } },
-            { users: { $elemMatch: { $eq: userId } } }
-        ]
-    }).populate('chatters', '-password').populate('latestmsg')
+        user: req.user._id, supplier: userId
+    }).populate('user', '-password').populate('supplier', '-password').populate('latestmsg')
 
     chat = await User.populate(chat, {
         path: 'latestmsg.sender',
@@ -24,29 +21,37 @@ module.exports.accessChat = asyncHandler(async (req, res) => {
     })
 
     if (chat?.length > 0) {
-        res.send(chat[0])
+        res.json(chat[0])
     }
 
     if (!chat?.length) {
         const chatData = {
             chatname: 'sender',
-            chatters: [req.user._id, userId]
+            user: req.user._id,
+            supplier: userId
         }
 
         const createdChat = await Chat.create(chatData)
 
-        const fullChat = await Chat.findOne({ _id: createdChat._id }).populate('chatters', '-password')
+        const fullChat = await Chat.findOne({ _id: createdChat._id }).populate('user', '-password').populate('supplier', '-password')
 
         res.status(200).send(fullChat)
     }
 })
 
 module.exports.fetchChats = asyncHandler(async (req, res) => {
-    const chats = await Chat.find({ chatters: { $elemMatch: { $eq: req.user._id } } }).populate('chatters', '-password').populate('latestmsg').sort({ updatedAt: -1 })
+    const chats = await Chat.find({
+        // $or: [
+        //     { user: req.user._id },
+        //     { supplier: req.supplier._id }
+        // ]
+    }).populate('user', '-password').populate('supplier', '-password').populate('latestmsg').sort({ updatedAt: -1 })
+
+    // console.log(chats)
 
     const allChats = await User.populate(chats, {
         path: 'latestmsg.sender',
-        select: 'name pic email'
+        select: 'name email'
     })
 
     if (!allChats) {
@@ -64,19 +69,28 @@ module.exports.sendMessage = asyncHandler(async (req, res) => {
     }
 
     let newMsg = {
-        sender: req.user._id,
+        sender: req.user._id || req.supplier._id,
         content: content,
         chat: chatId
     }
 
-    let message = await Message.create(newMsg)
+    let message = await Message.create(newMsg)  
 
-    message = await message.populate('sender', 'name email')
+    message = await message.populate('sender', 'name username email')
     message = await message.populate('chat')
-    message = await User.populate(message, {
-        path: 'Chat.chatters',
-        select: 'name, email'
-    })
+    if (req.user._id) {
+
+        message = await User.populate(message, {
+            path: 'Chat.user',
+            select: 'username, email'  
+        })
+    } else {
+        message = await Supplier.populate(message, {
+            path: 'Chat.supplier',
+            select: 'name, email'
+        })
+
+    }
 
     await Chat.findByIdAndUpdate(req.body.chatId, {
         latestmsg: message
@@ -100,7 +114,7 @@ module.exports.userSearch = asyncHandler(async (req, res) => {
             { name: { $regex: req.query.search, $options: 'i' } },
             { email: { $regex: req.query.search, $options: 'i' } }
         ]
-    }: {}
+    } : {}
 
     const supplier = await Supplier.find(keyword)
 

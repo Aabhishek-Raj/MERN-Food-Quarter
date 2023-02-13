@@ -5,14 +5,16 @@ const { adminProtect } = require('../middleware/authMiddleware')
 
 // router.get('/', adminController.adminSignUp)
 router.post('/signin', adminController.adminSignIn )
-router.get('/allusers',adminProtect, adminController.getAllUsers)
-router.get('/allsuppliers', adminProtect, adminController.getVerifiedSuppliers)
-router.get('/notverified', adminProtect, adminController.getSupplierRequest)
-router.patch('/blockuser', adminProtect, adminController.blockUser)
-router.patch('/unblockuser', adminProtect, adminController.unBlockUser)
-router.patch('/verify', adminProtect, adminController.verifySupplier)
-router.patch('/blocksupplier', adminProtect, adminController.blockSupplier)
-router.patch('/unblocksupplier', adminProtect, adminController.unBlockSupplier)
+
+router.use(adminProtect)
+router.get('/allusers', adminController.getAllUsers)
+router.get('/allsuppliers', adminController.getVerifiedSuppliers)
+router.get('/notverified', adminController.getSupplierRequest)
+router.patch('/blockuser', adminController.blockUser) 
+router.patch('/unblockuser', adminController.unBlockUser)
+router.patch('/verify', adminController.verifySupplier)
+router.patch('/blocksupplier', adminController.blockSupplier)
+router.patch('/unblocksupplier', adminController.unBlockSupplier)
 
 
 module.exports = router

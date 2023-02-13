@@ -2,7 +2,6 @@ import { Box, Button } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import { tokens } from "./theme";
-import { mockDataContacts } from "../../data/mockData";
 import Header from "./Header";
 import { useTheme } from "@mui/material";
 import { useEffect } from "react";

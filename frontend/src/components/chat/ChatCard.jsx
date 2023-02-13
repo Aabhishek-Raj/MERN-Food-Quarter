@@ -2,9 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { getSender } from '../../features/chat/chatService'
 
-const handleFunction = () => {}
-
-const ChatCard = ({chat}) => {
+const ChatCard = ({chat, handleFunction}) => {
 
     const {user} = useSelector(state => state.auth.user)
 
