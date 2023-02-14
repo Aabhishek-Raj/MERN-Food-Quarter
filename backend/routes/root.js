@@ -11,4 +11,8 @@ router.get("/user/verified", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "views", "verified.html"))
 })
 
+router.get('/blocked', (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "views", "blocked.html"))
+})
+
 module.exports = router

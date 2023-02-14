@@ -73,6 +73,7 @@ function App() {
           {/* <Route path="package/:id" element={<SuppliersFood />} /> */}
           <Route path="register" element={<SupplierRegister />} />
           <Route path="login" element={<SupplierLogin />} />
+          <Route path="chat" element={<ChatPage />} />
         </Route>
 
 

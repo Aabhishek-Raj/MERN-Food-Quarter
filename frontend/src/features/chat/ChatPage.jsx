@@ -15,7 +15,8 @@ let socket, selectedChatCompare
 
 const ChatPage = () => {
 
-    const { user } = useSelector(state => state.auth)
+    const user = useSelector(state => state.auth.user)
+    const supplier = useSelector(state => state.supplier.supplier)
 
     const { selectedChat } = useSelector(state => state.chat)
 
@@ -26,29 +27,31 @@ const ChatPage = () => {
     const [socketConnected, setSocketConnected] = useState(false)
 
     const dispatch = useDispatch()
+    
+    const status = user ? 'USER' : 'SUPPLIER';
 
     const fetchMessages = async () => {
         if (!selectedChat) {
             return
         }
 
-        const result = await allMessages(selectedChat._id)
+        const result = await allMessages(selectedChat._id, status)
         setMessages(result)
 
         socket.emit('join chat', selectedChat._id)
 
     }
 
-    
+
     useEffect(() => {
 
-        dispatch(getAllChats())
+        dispatch(getAllChats(status))
     }, [dispatch])
 
     useEffect(() => {
 
         socket = io(ENDPOINT)
-        socket.emit('setup', user)
+        socket.emit('setup', user ? user : supplier)
         socket.on('connection', () => setSocketConnected(true))
     }, [])
 
@@ -62,7 +65,7 @@ const ChatPage = () => {
 
         socket.on('message recieved', (newMessageRecieved) => {
 
-            if(!selectedChatCompare || selectedChat !== newMessageRecieved.chat._id) {
+            if (!selectedChatCompare || selectedChat !== newMessageRecieved.chat._id) {
                 //give notification
             } else {
                 setMessages([...messages, newMessageRecieved])
@@ -71,25 +74,25 @@ const ChatPage = () => {
     })
 
 
-    const handleSendMsg = async (e) => { 
-        if( newMessage ) {
-            console.log('selectedChat._id')
+    const handleSendMsg = async (e) => {
+        if (newMessage) {
             console.log(selectedChat._id)
             console.log(newMessage)
-            const result = await sendMessage(newMessage, selectedChat._id)
             setNewMessage('')
+            const result = await sendMessage(newMessage, selectedChat._id, status)
+            console.log(result )
 
-            socket.emit('new message',  result)
+            socket.emit('new message', result)
 
-            setMessages([...messages, result])
+            setMessages([...messages, ...result])
         }
     }
 
-    const handleTyping = (e) => { 
-            let { value } = e.target
-            setNewMessage( value )
+    const handleTyping = (e) => {
+        let { value } = e.target
+        setNewMessage(value)
     }
-    console.log(messages)
+    console.log(newMessage)
 
     return (
         <>
@@ -131,7 +134,7 @@ const ChatPage = () => {
                         </button>
                     </div>
                     <div class="top-0 bottom-0 left-0 right-0 flex flex-col flex-1 overflow-hidden bg-transparent bg-bottom bg-cover">
-                        <div class="self-center flex-1 w-full max-w-xl">
+                        <div class="self-center flex-1 w-full max-w-xl overflow-y-scroll hidden-scrollbar">
                             <div class="relative flex flex-col px-3 py-1 m-auto">
                                 <div class="self-center px-2 py-1 mx-0 my-1 text-sm text-gray-700 bg-white border border-gray-200 rounded-full shadow rounded-tg">Channel was created</div>
                                 <div class="self-center px-2 py-1 mx-0 my-1 text-sm text-gray-700 bg-white border border-gray-200 rounded-full shadow rounded-tg">May 6</div>
@@ -141,7 +144,7 @@ const ChatPage = () => {
                                     </div>
                                 </div>
 
-                                { messages?.length > 0 &&
+                                {messages?.length > 0 &&
                                     messages.map((each) => (
                                         <SingleMsg key={each._id} message={each} />
                                     ))

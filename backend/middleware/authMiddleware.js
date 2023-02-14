@@ -21,7 +21,7 @@ const protect = asyncHandler(async (req, res, next) => {
     } catch (error) {
       console.log(error)
       res.status(401)
-      throw new Error('Not authorized')
+      throw new Error('Not authorized token')
     }
   }
 
@@ -79,4 +79,31 @@ const adminProtect = asyncHandler( async (req, res, next) => {
   }
 })
 
-module.exports = { protect, supplierProtect, adminProtect }
+const combinedMiddleware = (req, res, next) => {
+  protect (req, res, (err) => {
+    if(!err){
+      return next()
+    }
+    supplierProtect(req, res, (err) => {
+      if(!err) {
+        return next()
+      }
+      return next(err)
+    })   
+  }) 
+}
+
+const checkBlocked = (req, res, next) => {
+  console.log(req.user)
+  if (req.user && !req.user.isActive) {
+    console.log('Blocked user')
+    // User is blocked, redirect them to a page explaining the situation
+    res.redirect('/blocked');
+  } else {
+    // User is not blocked, proceed to the next middleware or route handler
+    next();
+  }
+};
+ 
+
+module.exports = { protect, supplierProtect, adminProtect, combinedMiddleware, checkBlocked }

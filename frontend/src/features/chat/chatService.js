@@ -36,7 +36,20 @@ export const accessChat = async (userId, token) => {
                 Authorization: `Bearer ${token}` 
             }
         }
-        const response = await API.post('/', {userId}, config)
+        const response = await API.post('/replay', {userId}, config)
+        console.log('avadf')
+        console.log(response.data)
+        return response.data     
+}
+
+export const createChat = async (supplierId, token) => {
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}` 
+            }
+        }
+        const response = await API.post('/', {supplierId}, config)
         return response.data     
 }
 
@@ -44,31 +57,48 @@ export const getSender = (loggedUser, chatters) => {
     // return chatters[0]._id === loggedUser._id ? chatters[1].name: chatters[0].name
 }
 
-export const allMessages = async (chatId) => {
+export const allMessages = async (chatId, manage) => {
     try {
-        const storageData = await JSON.parse(localStorage.getItem('profile'))
+        let token
+
+        if(manage === 'USER'){
+            const storageData = await JSON.parse(localStorage.getItem('profile'))
+            token = storageData.Token
+        }else {
+            const storageData = await JSON.parse(localStorage.getItem('supplier'))
+            token = storageData.SupplierToken
+        }
 
         const config = {
             headers: {
-                Authorization: `Bearer ${storageData.Token}` 
+                Authorization: `Bearer ${token}` 
             }
         }
 
         const response = await API.get(`/message/${chatId}`, config)
-
+        
         return response.data
     } catch(err) {
         console.log(err.response.message)
     }
 }
 
-export const sendMessage = async (content, chatId) => {
+export const sendMessage = async (content, chatId, manage) => {
     try {
-        const storageData = await JSON.parse(localStorage.getItem('profile'))
+
+        let token
+
+        if(manage === 'USER'){
+            const storageData = await JSON.parse(localStorage.getItem('profile'))
+            token = storageData.Token
+        }else {
+            const storageData = await JSON.parse(localStorage.getItem('supplier'))
+            token = storageData.SupplierToken
+        }
 
         const config = {
             headers: {
-                Authorization: `Bearer ${storageData.Token}` 
+                Authorization: `Bearer ${token}` 
             }
         }
 

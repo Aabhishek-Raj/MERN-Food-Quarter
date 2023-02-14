@@ -3,8 +3,9 @@ const mongoose = require('mongoose')
 const messageSchema = new mongoose.Schema({
     sender: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: ["User", "Supplier"]
-    }],
+        ref: ['Supplier', 'User']
+    }
+],
     content: {
         type: String
     },
@@ -14,7 +15,8 @@ const messageSchema = new mongoose.Schema({
     }
 },
 {
-    timestamps: true
+    timestamps: true,
+    toJSON: {virtuals: true}
 }
 )
 
