@@ -72,10 +72,13 @@ const packageSlice = createSlice({
             }
             
             localStorage.setItem('packages', JSON.stringify(state))
+        },
+        pricePerPerson: (state, action) => {
+     
         }
     }
 })
 
-export const { addToPackage, deleteFromPackage, manageItemQuantity } = packageSlice.actions
+export const { addToPackage, deleteFromPackage, manageItemQuantity, pricePerPerson } = packageSlice.actions
 
 export default packageSlice.reducer

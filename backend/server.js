@@ -68,11 +68,14 @@ mongoose.connection.once('open', () => {
 io.on('connection', socket => {
     console.log(`New socket connection from ${socket.handshake.address}`)
 
-    socket.on('setup', (userData) => { 
+    socket.on('setup', (userData) => {  
+        // console.log('vann')
         // console.log(userData)
-        userData.roles &&  socket.join(userData.user._id)
-        !userData.roles && socket.join(userData._id) 
-        socket.emit('connected')
+        socket.join(userData._id)
+        // userData.user?.roles &&  socket.join(userData.user._id)
+        // !userData.user?.roles && socket.join(userData.supplier._id) 
+        socket.emit('connected')   
+        console.log(`${userData.user?.username || userData.supplier?.name} connected`)
     })  
 
     socket.on('join chat', (room) => {
@@ -82,15 +85,21 @@ io.on('connection', socket => {
 
     socket.on('new message', (newMessageRecieved) => { 
         // console.log(newMessageRecieved)
-        // let chat = newMessageRecieved.chat 
+        let chat = newMessageRecieved.chat 
+        console.log(chat._id)
 
-        // if(!chat.users) return console.log('chat.users is not defined') 
+        if(!chat.user || !chat.supplier) return console.log('chat.users is not defined') 
+        
+        // if(chat.user?._id === newMessageRecieved.sender ){
 
-        // chat.users.forEach(user => {
-        //     if(user._id == newMessageRecieved.sender._id) return
+            socket.in(chat._id ).emit('message recieved', newMessageRecieved)
+        // }
 
-        //     socket.in(user._id).emit('message recieved', newMessageRecieved)
-        // }) 
+        // if(chat.supplier?._id === newMessageRecieved.sender){
+        //     socket.to()
+        //     socket.in(chat.supplier._id).emit('message recieved', newMessageRecieved)
+        // }
+
     })
 })
   

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { deleteFromPackage, manageItemQuantity } from './packageSlice'
+import { deleteFromPackage, manageItemQuantity, pricePerPerson } from './packageSlice'
 
 const ManagePackage = () => {
 
@@ -20,6 +20,10 @@ const ManagePackage = () => {
 
     const handleQuantityManage = (supplierId, item, manage) => {
       dispatch(manageItemQuantity({supplierId, item, manage}))
+    }
+
+    const handlePeopleCount = (e) => {
+   
     }
 
     return (
@@ -86,6 +90,12 @@ const ManagePackage = () => {
             <p class="mb-1 text-lg font-bold">${pack.total} USD</p>
             <p class="text-sm text-gray-700">including VAT</p>
           </div>
+        </div>
+        <div class="flex justify-between mt-6 mb-4">
+          <p class="text-lg font-semibold">Enter the No. of People:</p>
+        </div>
+        <div>
+          <input className='border p-3' type="text" placeholder='No of People...' />
         </div>
         <button class="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Book now</button>
       </div>

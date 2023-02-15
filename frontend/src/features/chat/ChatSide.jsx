@@ -13,7 +13,7 @@ const ChatSide = () => {
     const { chats } = useSelector(state => state.chat)
 
     const user = useSelector(state => state.auth.user)
-    const { supplier } = useSelector(state => state.supplier.supplier)
+    const supplier = useSelector(state => state.supplier.supplier)
 
     const [search, setSearch] = useState()
     const [searchResult, setSearchResult] = useState([])
@@ -37,7 +37,6 @@ const ChatSide = () => {
     const handleFunction = async (userId, supplierId) => {
 
         const Id = user ? supplierId : userId
-        console.log(Id, manage)
 
         dispatch(accessChat({ Id, manage }))
     }

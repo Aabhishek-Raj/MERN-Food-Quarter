@@ -37,8 +37,6 @@ export const accessChat = async (userId, token) => {
             }
         }
         const response = await API.post('/replay', {userId}, config)
-        console.log('avadf')
-        console.log(response.data)
         return response.data     
 }
 
@@ -54,6 +52,8 @@ export const createChat = async (supplierId, token) => {
 }
 
 export const getSender = (loggedUser, chatters) => {
+    console.log(loggedUser + 'dfjdsifh')
+    console.log(chatters)
     // return chatters[0]._id === loggedUser._id ? chatters[1].name: chatters[0].name
 }
 

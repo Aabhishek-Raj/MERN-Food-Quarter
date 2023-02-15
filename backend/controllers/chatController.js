@@ -60,7 +60,6 @@ module.exports.accessChat = asyncHandler(async (req, res) => {
     })
 
     if (chat?.length > 0) {
-        console.log(chat[0])
         res.status(200).json(chat[0]) 
     }
 
@@ -81,11 +80,12 @@ module.exports.accessChat = asyncHandler(async (req, res) => {
 })
 
 module.exports.fetchChats = asyncHandler(async (req, res) => {
+
     const chats = await Chat.find({
-        // $or: [
-        //     { user: req.user._id },
-        //     { supplier: req.supplier._id }
-        // ]
+        $or: [
+            { user: req.user?._id },
+            { supplier: req.supplier?.supplierId }
+        ]
     }).populate('user', '-password').populate('supplier', '-password').populate('latestmsg').sort({ updatedAt: -1 })
 
     console.log(chats)
@@ -114,25 +114,21 @@ module.exports.sendMessage = asyncHandler(async (req, res) => {
         chat: chatId
     }
 
-    const message = await Message.create(newMsg)
+    let msg = await Message.create(newMsg)
 
-    const options = { path: 'sender', model: ['User', 'Supplier'] }
-
-     let msg = await Message.find({_id: message._id}).populate(options).populate('chat') 
-
-     console.log(msg)
+      msg = await msg.populate('chat') 
 
     if (req.user) { 
 
         msg = await User.populate(msg, {   
             path: 'chat.user',
-            select: 'username, email'  
+            select: 'username email roles'  
         }) 
     } else {
    
         msg = await Supplier.populate(msg, {
             path: 'chat.supplier',
-            select: 'name, email' 
+            select: 'name email' 
         })
 
     }
@@ -140,13 +136,12 @@ module.exports.sendMessage = asyncHandler(async (req, res) => {
     await Chat.findByIdAndUpdate(req.body.chatId, {
         latestmsg: msg._id
     })
-    console.log(msg)
 
     res.status(200).json(msg)
 })
 
 module.exports.allMessages = asyncHandler(async (req, res) => {
-    const messages = await Message.find({ chat: req.params.chatId }).populate('sender', 'name, username email').populate('chat')
+    const messages = await Message.find({ chat: req.params.chatId }).populate('chat')
 
     res.status(200).json(messages)    
 })

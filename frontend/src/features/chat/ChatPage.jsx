@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import SingleMsg from '../../components/chat/SingleMsg'
@@ -27,7 +27,9 @@ const ChatPage = () => {
     const [socketConnected, setSocketConnected] = useState(false)
 
     const dispatch = useDispatch()
-    
+
+    const scrollRef = useRef()
+
     const status = user ? 'USER' : 'SUPPLIER';
 
     const fetchMessages = async () => {
@@ -49,11 +51,11 @@ const ChatPage = () => {
     }, [dispatch])
 
     useEffect(() => {
-
         socket = io(ENDPOINT)
-        socket.emit('setup', user ? user : supplier)
+        socket.emit('setup', selectedChat)
         socket.on('connection', () => setSocketConnected(true))
-    }, [])
+    })
+
 
     useEffect(() => {
         fetchMessages()
@@ -64,8 +66,10 @@ const ChatPage = () => {
     useEffect(() => {
 
         socket.on('message recieved', (newMessageRecieved) => {
+            console.log('vanndr')
+            console.log(newMessageRecieved)
 
-            if (!selectedChatCompare || selectedChat !== newMessageRecieved.chat._id) {
+            if (!selectedChatCompare || selectedChatCompare._id !== newMessageRecieved.chat._id) {
                 //give notification
             } else {
                 setMessages([...messages, newMessageRecieved])
@@ -73,18 +77,24 @@ const ChatPage = () => {
         })
     })
 
+    useEffect(() => {
+        if (scrollRef.current) {
+          scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+        }
+      }, [messages])
+
+    // useEffect(() => {
+    //     scrollRef.current.scrollIntoView({ behavior: "smooth" })
+    // }, [messages])
 
     const handleSendMsg = async (e) => {
         if (newMessage) {
-            console.log(selectedChat._id)
-            console.log(newMessage)
             setNewMessage('')
             const result = await sendMessage(newMessage, selectedChat._id, status)
-            console.log(result )
 
             socket.emit('new message', result)
 
-            setMessages([...messages, ...result])
+            setMessages([...messages, result])
         }
     }
 
@@ -92,7 +102,6 @@ const ChatPage = () => {
         let { value } = e.target
         setNewMessage(value)
     }
-    console.log(newMessage)
 
     return (
         <>
@@ -134,26 +143,21 @@ const ChatPage = () => {
                         </button>
                     </div>
                     <div class="top-0 bottom-0 left-0 right-0 flex flex-col flex-1 overflow-hidden bg-transparent bg-bottom bg-cover">
-                        <div class="self-center flex-1 w-full max-w-xl overflow-y-scroll hidden-scrollbar">
+                        <div ref={scrollRef} class="self-center flex-1 w-full max-w-xl overflow-y-scroll hidden-scrollbar">
                             <div class="relative flex flex-col px-3 py-1 m-auto">
                                 <div class="self-center px-2 py-1 mx-0 my-1 text-sm text-gray-700 bg-white border border-gray-200 rounded-full shadow rounded-tg">Channel was created</div>
                                 <div class="self-center px-2 py-1 mx-0 my-1 text-sm text-gray-700 bg-white border border-gray-200 rounded-full shadow rounded-tg">May 6</div>
-                                <div class="self-start w-3/4 my-2">
-                                    <div class="p-4 text-sm bg-white rounded-t-lg rounded-r-lg shadow">
-                                        Don't forget to check on all responsive sizes.
-                                    </div>
-                                </div>
 
                                 {messages?.length > 0 &&
                                     messages.map((each) => (
-                                        <SingleMsg key={each._id} message={each} />
+                                            <SingleMsg key={each._id} message={each} />
                                     ))
                                 }
-                                <div class="self-end w-3/4 my-2">
+                                {/* <div class="self-end w-3/4 my-2">
                                     <div class="p-4 text-sm bg-white rounded-t-lg rounded-l-lg shadow">
                                         Use the buttons above the editor to test on them{newMessage}
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                         <div class="relative flex items-center self-center w-full max-w-xl p-4 overflow-hidden text-gray-600 focus-within:text-gray-400">
