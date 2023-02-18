@@ -35,6 +35,7 @@ app.use('/admin', require('./routes/adminRoutes'))
 app.use('/supplier', require('./routes/supplierRoutes'))
 app.use('/food', require('./routes/foodRoutes'))
 app.use('/chats', require('./routes/chatRoutes'))
+app.use('/order', require('./routes/orderRoutes'))
 
 
 app.all('*', (req, res) => {

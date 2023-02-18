@@ -1,4 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
 const packages = JSON.parse(localStorage.getItem('packages')) || {}
@@ -14,7 +14,7 @@ const packageSlice = createSlice({
 
             if (!state[supplierId]) {
                 state[supplierId] = {
-                    items: [{...item, itemquantity: 1}],
+                    items: [{ ...item, itemquantity: 1 }],
                     total: item.price,
                     quantity: 1,
                 };
@@ -22,12 +22,12 @@ const packageSlice = createSlice({
                 const itemIndex = state[supplierId].items.findIndex(each => each._id === item._id);
 
                 if (itemIndex === -1) {
-                    state[supplierId].items.push({...item, itemquantity: 1});
+                    state[supplierId].items.push({ ...item, itemquantity: 1 });
                     state[supplierId].total += item.price;
                     state[supplierId].quantity++;
                 } else {
                     const currentItem = state[supplierId].items[itemIndex]
-                    currentItem.itemquantity = currentItem.itemquantity + 1 
+                    currentItem.itemquantity = currentItem.itemquantity + 1
                     state[supplierId].total += item.price;
                     // state[supplierId].quantity++
                 }
@@ -64,20 +64,30 @@ const packageSlice = createSlice({
                     currentItem.itemquantity -= 1
                     state[supplierId].total -= item.price;
                 }
-            } else if( manage === 'INCREASE') {
-                if(currentItem.itemquantity < 5 ) {
+            } else if (manage === 'INCREASE') {
+                if (currentItem.itemquantity < 5) {
                     currentItem.itemquantity += 1
                     state[supplierId].total += item.price;
                 }
             }
-            
+
             localStorage.setItem('packages', JSON.stringify(state))
         },
         pricePerPerson: (state, action) => {
-     
-        }
+            const { personCount, id } = action.payload;
+            const currentTotal = state[id].items.reduce((total, item) => {
+                const itemTotal = item.price * item.itemquantity
+                return total + itemTotal
+            }, 0)
+            if (personCount > 1) {
+                const newTotal = personCount * currentTotal;
+                state[id].total = newTotal;
+            } else {
+                state[id].total = currentTotal
+            }
     }
-})
+}}
+)
 
 export const { addToPackage, deleteFromPackage, manageItemQuantity, pricePerPerson } = packageSlice.actions
 

@@ -38,6 +38,8 @@ import CreateFood from './features/food/CreateFood'
 import ManagePackage from './features/package/ManagePackage';
 import SinlgeView from './features/food/SinlgeView';
 import ChatPage from './features/chat/ChatPage';
+import CheckOut from './features/order/CheckOut';
+import Success from './components/order/Success';
 
 
 
@@ -59,6 +61,8 @@ function App() {
             <Route path='single/:id?' element={<SinlgeView/>} />
             <Route path='package/:id' element={<ManagePackage/>} />
             <Route path="chat" element={<ChatPage />} />
+            <Route path="checkout/:id" element={<CheckOut/>} />
+            <Route path='success' element={<Success />} /> 
 
 
           </Route>  {/* End of Dash */}

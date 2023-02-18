@@ -83,9 +83,6 @@ const ChatPage = () => {
         }
       }, [messages])
 
-    // useEffect(() => {
-    //     scrollRef.current.scrollIntoView({ behavior: "smooth" })
-    // }, [messages])
 
     const handleSendMsg = async (e) => {
         if (newMessage) {
@@ -153,11 +150,6 @@ const ChatPage = () => {
                                             <SingleMsg key={each._id} message={each} />
                                     ))
                                 }
-                                {/* <div class="self-end w-3/4 my-2">
-                                    <div class="p-4 text-sm bg-white rounded-t-lg rounded-l-lg shadow">
-                                        Use the buttons above the editor to test on them{newMessage}
-                                    </div>
-                                </div> */}
                             </div>
                         </div>
                         <div class="relative flex items-center self-center w-full max-w-xl p-4 overflow-hidden text-gray-600 focus-within:text-gray-400">
