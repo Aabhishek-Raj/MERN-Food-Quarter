@@ -13,8 +13,6 @@ import SuppliersFood from './features/food/SuppliersFood';
 
 // import { ColorModeContext, useMode } from './components/admin/theme';
 // import { CssBaseline, ThemeProvider } from '@mui/material';
-
-import DashBoard from './components/admin/DashBoard';
 import SuppliersView from './components/admin/SuppliersView';
 import Verifications from './components/admin/Verifications';
 import Form from './components/admin/Form'
@@ -40,6 +38,10 @@ import SinlgeView from './features/food/SinlgeView';
 import ChatPage from './features/chat/ChatPage';
 import CheckOut from './features/order/CheckOut';
 import Success from './components/order/Success';
+import OrderFullView from './components/order/OrderTable';
+import Dashboard from './features/admin/Dashboard';
+import OrderTable from './components/order/OrderTable';
+import OrderHistory from './components/order/OrderHistory';
 
 
 
@@ -63,6 +65,7 @@ function App() {
             <Route path="chat" element={<ChatPage />} />
             <Route path="checkout/:id" element={<CheckOut/>} />
             <Route path='success' element={<Success />} /> 
+            <Route path="history" element={<OrderTable/>} />
 
 
           </Route>  {/* End of Dash */}
@@ -74,16 +77,16 @@ function App() {
           <Route path="create" element={<CreateFood/>} />
           <Route path="order" element={<ManagePackage/>} />
           <Route path="additems/:id" element={<AddItems />} />
-          {/* <Route path="package/:id" element={<SuppliersFood />} /> */}
           <Route path="register" element={<SupplierRegister />} />
           <Route path="login" element={<SupplierLogin />} />
           <Route path="chat" element={<ChatPage />} />
+          <Route path="orderview/:id" element={<OrderHistory />} />
         </Route>
 
 
 
         <Route path='/admin' element={<AdminLayout />}>
-          <Route index element={<DashBoard />} />
+          <Route index element={<Dashboard />} />
           <Route path="users" element={<UsersView />} />
           <Route path="suppliers" element={<SuppliersView />} />
           <Route path="verify" element={<Verifications />} />

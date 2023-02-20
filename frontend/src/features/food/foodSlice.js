@@ -21,19 +21,6 @@ export const createFood = createAsyncThunk('food/create', async(foodData, thunkA
     }
 })
 
-//Add items to the Package
-// export const addItem = createAsyncThunk('package/additem', async({formData, id}, thunkAPI) => {
-
-//     try{
-//         const token = thunkAPI.getState().supplier.supplier.SupplierToken
-
-//         return await packageService.addItem(formData, id, token)
-
-//     } catch(err){
-//         return thunkAPI.rejectWithValue(err.response.data)
-//     }
-// })
-
 //Get all packages of a supplier
 export const getFoods = createAsyncThunk('food/getfoods', async(_, thunkAPI) => {
     try{
@@ -54,6 +41,18 @@ export const getSupplierFoods = createAsyncThunk('package/getall', async(supplie
         return await foodService.getSupplierFoods(supplierId, token)
 
     } catch(err){
+        return thunkAPI.rejectWithValue(err.response.data)
+    }
+ })
+
+
+ export const deleteItem = createAsyncThunk('food/delete', async(foodId, thunkAPI) => {
+    try{
+        const token = thunkAPI.getState().supplier.supplier.SupplierToken
+
+        return await foodService.deleteItem(foodId, token)
+
+    }catch(err){
         return thunkAPI.rejectWithValue(err.response.data)
     }
  })
@@ -105,35 +104,17 @@ export const foodSlice = createSlice({
                 state.loading = false 
                 state.foods = action.payload
             })
-            // .addCase(addItem.pending, (state) => {
-            //     state.loading = true
-            // })
-            // .addCase(addItem.rejected, (state, action) => {
-            //     state.loading = false
-            //     state.error = action.payload.message
-            //     state.packages = null
-            // })
-            // .addCase(addItem.fulfilled, (state, action) => {
-            //     state.loading = false
-            //     state.error = null
-            //     state.packages = state.packages.map((pack) => {
-            //         if(pack._id === action.payload._id){ 
-            //             pack = action.payload
-            //         }
-            //         return pack     
-            //     })
-            // })
-            // .addCase(getAllPackages.pending, (state) => {
-            //     state.loading = true
-            // })
-            // .addCase(getAllPackages.rejected, (state, action) => {
-            //     state.loading = false
-            //     state.error = action.payload
-            // })
-            // .addCase(getAllPackages.fulfilled, (state, action) => {
-            //     state.loading = false
-            //     state.packages = action.payload
-            // })
+            .addCase(deleteItem.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(deleteItem.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload.message
+            })
+            .addCase(deleteItem.fulfilled, (state, action) => {
+                state.loading = false
+                state.foods = state.foods.filter(food => food._id !== action.payload.id)  
+            })
     }
 
 })

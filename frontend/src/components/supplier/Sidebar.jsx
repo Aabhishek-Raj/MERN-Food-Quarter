@@ -35,7 +35,7 @@ const Sidebar = () => {
 
 
     return (
-        <>
+        <div className="bg-gradient-to-br pb-80 from-[#a6d1e6] to-[#44abda]">
             <div className="md:flex hidden flex-col w-[240px] py-10 px-4  ">
                 <img src="https://c8.alamy.com/comp/PCYG1J/pizzeria-fast-food-logo-or-label-happy-chef-holding-pizza-and-scapula-in-hands-vector-illustration-PCYG1J.jpg" alt="logo" className="w-full h-14 object-contain" />
                 <NavLinks />
@@ -61,7 +61,7 @@ const Sidebar = () => {
 
             </div>
 
-        </>
+        </div>
     )
 }
 

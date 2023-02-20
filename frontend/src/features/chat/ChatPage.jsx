@@ -66,7 +66,7 @@ const ChatPage = () => {
     useEffect(() => {
 
         socket.on('message recieved', (newMessageRecieved) => {
-            console.log('vanndr')
+
             console.log(newMessageRecieved)
 
             if (!selectedChatCompare || selectedChatCompare._id !== newMessageRecieved.chat._id) {

@@ -71,3 +71,88 @@ export const verifyPayment = async (response, pack, deliveryaddress) => {
         return err.data.message
     }
 }
+
+export const getAllOrders = async () => {
+
+    const storageData = await JSON.parse(localStorage.getItem('supplier'))
+
+    try {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${storageData.SupplierToken}` 
+            }
+        }
+
+        const response = await API.get('/getorders', config)
+        return response.data
+        
+    } catch (err) {
+        return err.data.message
+    }
+}
+
+export const getOrderHistory = async () => {
+
+    const storageData = await JSON.parse(localStorage.getItem('profile'))
+
+    try{
+        const config = {
+            headers: {
+                Authorization: `Bearer ${storageData.Token}`
+            }
+        }
+
+        const response = await API.get('/allorders', config)
+        return response.data
+
+    } catch(err){
+        console.log(err)
+        return err.data.message
+    }
+}
+
+export const getOrder = async (orderId) => {
+    
+    const storageData = await JSON.parse(localStorage.getItem('supplier'))
+
+    try {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${storageData.SupplierToken}`
+            },
+            params:{
+                orderId
+            }
+        }
+
+        const response = await API.get('/orderget',config)
+        return response.data
+        
+    } catch (err) {
+        return err.data.message
+    }
+}
+
+export const getDeliveryAddress = async (addressId, userId) => {
+    console.log(userId)
+
+    const storageData = await JSON.parse(localStorage.getItem('supplier'))
+
+    try {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${storageData.SupplierToken}`
+            },
+            params: {
+                addressId,
+                userId
+            }
+        }
+
+        const response = await API.get('/getdeliveryaddress', config)
+        return response.data
+
+    } catch(err) {
+        return err.data.message
+    }
+} 

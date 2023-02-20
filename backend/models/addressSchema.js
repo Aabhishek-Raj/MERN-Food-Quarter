@@ -47,7 +47,7 @@ const addressSchema = new mongoose.Schema({
         max: 40
     },
     alternatephone: {
-        type: String
+        type: String    
     },
     addressType: {
         type: String,

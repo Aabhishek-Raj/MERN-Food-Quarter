@@ -11,6 +11,7 @@ router.use(supplierProtect)
 router.post('/create', upload.single('image'), foodController.createFood)
 router.get('/getfoods', foodController.getFoods)
 router.post('/additem', upload.single('foodpic'), foodController.addItems)
+router.delete('/deleteitem', foodController.deleteItems)
 
 
 

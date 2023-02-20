@@ -21,22 +21,27 @@ const DashLayout = () => {
   return (
     <>
 
-    
-      <TopBar supplier={false} user={true}/>
-      <div className="dash-container">
-      <div className="relative flex bg-gradient-to-br from-[#a6d1e6] to-[#44abda]">
-      <Sidebar />
 
-      <div className="flex-1 flex flex-col bg-gradient-to-br from-[#a6d1e6] to-[#daecf4]">
-      {/* <div className="px-6 h-[calc(100vh-72px)] overflow-y-scroll hide-scrollbar flex xl:flex-row flex-col-reverse">
+      <div className="flex flex-col min-h-screen">
+        <TopBar supplier={false} user={true} />
+        <div className="dash-container flex-grow bg-gradient-to-br from-[#a6d1e6] to-[#daecf4]">
+          <div className="relative flex">
+            <div className="">
+            <Sidebar />
+            </div>
+
+            <div className="flex-1 flex flex-col">
+              {/* <div className="px-6 h-[calc(100vh-72px)] overflow-y-scroll hide-scrollbar flex xl:flex-row flex-col-reverse">
           <div className="flex-1 h-fit pb-40"> */}
-        {user && <Outlet />}
-      </div>
-      </div>
-      {/* </div>
+              {user && <Outlet />}
+            </div>
+          </div>
+          {/* </div>
       </div> */}
+        </div>
+        <Footer />
+
       </div>
-      <Footer />
     </>
   )
 }

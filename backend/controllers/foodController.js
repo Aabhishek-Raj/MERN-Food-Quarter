@@ -99,3 +99,26 @@ module.exports.getSupplierFoods = asyncHandler( async (req, res) => {
     res.status(200).json(foods)
 
 })
+
+// @desc To delete food
+// @route DELETE /deletefood
+// @access Private
+module.exports.deleteItems = asyncHandler( async (req, res) => {
+    const {foodId} = req.query
+
+    if(!foodId){
+        return res.status(400).json({message: "Food Id required"})
+    }
+
+    const food = await Food.findById(foodId).exec()
+
+    if(!food){
+        return res.status(400).json({message: "Food Item not found"})
+    }
+
+    const deleted = await food.deleteOne()
+     
+    console.log(`deleted ${deleted._id} of name ${deleted.name}`)
+
+    res.status(200).json({message: `Food ${deleted.name} has been deleted`, id: foodId})
+}) 
