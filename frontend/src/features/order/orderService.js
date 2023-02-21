@@ -134,7 +134,6 @@ export const getOrder = async (orderId) => {
 }
 
 export const getDeliveryAddress = async (addressId, userId) => {
-    console.log(userId)
 
     const storageData = await JSON.parse(localStorage.getItem('supplier'))
 

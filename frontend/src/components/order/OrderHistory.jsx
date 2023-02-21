@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { getDeliveryAddress, getOrder } from '../../features/order/orderService'
+import TinyCard from '../food/TinyCard'
 
 const OrderHistory = () => {
 
@@ -17,7 +18,6 @@ const OrderHistory = () => {
         const data = await getOrder(id)
         setData(data)
         const result = await getDeliveryAddress(data?.deliveryaddress, data?.user._id)
-        console.log(data)
         setDelivery(result)
     }
 
@@ -39,16 +39,16 @@ const OrderHistory = () => {
                     <div class="w-full text-center mt-5">
                         <div class="flex justify-center lg:pt-4 pt-8 pb-0">
                             <div class="p-3 text-center">
-                                <span class="text-xl font-bold block uppercase tracking-wide text-slate-700">3,360</span>
-                                <span class="text-sm text-slate-400">Quatity</span>
+                                <span class="text-xl font-bold block uppercase tracking-wide text-slate-700">3360</span>
+                                <span class="text-sm text-slate-400">People</span>
                             </div>
                             <div class="p-3 text-center">
-                                <span class="text-xl font-bold block uppercase tracking-wide text-slate-700">2,454</span>
+                                <span class="text-xl font-bold block uppercase tracking-wide text-slate-700">{data?.quantity}</span>
                                 <span class="text-sm text-slate-400">Quatity</span>
                             </div>
 
                             <div class="p-3 text-center">
-                                <span class="text-xl font-bold block uppercase tracking-wide text-slate-700">564</span>
+                                <span class="text-xl font-bold block uppercase tracking-wide text-slate-700">{data?.total}</span>
                                 <span class="text-sm text-slate-400">Amount</span>
                             </div>
                         </div>
@@ -59,13 +59,38 @@ const OrderHistory = () => {
                     <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">
                         <i class="fas fa-map-marker-alt mr-2 text-slate-400 opacity-75"></i>{data?.user.email}
                     </div>
+                    <div className='grid grid-cols-2 md:grid-cols-3 gap-2 py-6'>
+                        {
+                            data?.items.map(each => (
+
+                                <TinyCard key={each._id} item={each}/>
+                            ))
+                        }
+                        {/* <TinyCard />
+                        <TinyCard />
+                        <TinyCard />
+                        <TinyCard /> */}
+
+                    </div>
                 </div>
                 <div class="mt-6 py-6 border-t border-slate-200 text-center">
                     <div class="flex flex-wrap justify-center">
                         <div class="w-full px-4">
                             <p>Delivery Address:</p>
-                            <p class="font-light leading-relaxed text-slate-600 mb-4">{data?.deliveryaddress}</p>
-                            <button class="font-normal text-slate-700 hover:text-slate-400">Follow Account</button>
+                            {
+                                delivery && (
+                                    <>
+                                        <p class="font-light leading-relaxed text-slate-600 mb-4">{delivery[0].name}  {delivery[0].pincode} {delivery[0].aaddress} {delivery[0].district} {delivery[0].locality} {delivery[0].landmark} {delivery[0].state}</p>
+                                        <p class="font-light leading-relaxed text-slate-600 mb-4">Phone: {delivery[0].phoneNo} {delivery[0].alternatephone} {delivery[0].addressType}</p>
+
+                                    </>
+                                )
+                            }
+                            {/* <div className='flex justify-evenly'>
+                                <button class="font-normal bg-blue-400 p-3 rounded-lg border border-black text-slate-700 hover:text-white">Decline order</button>
+                                <button class="font-normal bg-blue-400 p-3 rounded-lg border border-black text-slate-700 hover:text-white">Take Order</button>
+
+                            </div> */}
                         </div>
                     </div>
                 </div>

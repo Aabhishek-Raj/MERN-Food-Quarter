@@ -119,16 +119,25 @@ module.exports.getDeliveryAddress = asyncHandler(async (req, res) => {
         {
             $match: { user: ObjUserId }
         },
-        {
+        {  
             $unwind: '$address' 
         },
+        {
+            $match: { 'address._id': ObjAddressId }
+        },
+        {
+            // $arrayElemAt: ['$address', 0]
+            $replaceRoot: { newRoot: "$address" } 
+        },
         // {
-        //     $match: { 'address.name': ObjAddressId }
-        // }
-
+        //     $project: {address: {$arrayElemAt:['$address', 0]}}
+        // }   
     ])
 
-    console.log(address);
+    if(!address){      
+        return res.status(400).json({message: 'Address not found'})   
+    }
+    console.log(address)
 
     res.status(200).json(address)
 })                      

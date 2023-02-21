@@ -122,3 +122,19 @@ module.exports.deleteItems = asyncHandler( async (req, res) => {
 
     res.status(200).json({message: `Food ${deleted.name} has been deleted`, id: foodId})
 }) 
+
+//@desc Get foods by searching
+//@route GET /foodsearch
+//@access Private
+module.exports.foodSearch = asyncHandler(async (req, res) => {
+    const keyword = req.query.search ? {
+        $or: [
+            { name: { $regex: req.query.search, $options: 'i' } },
+            { email: { $regex: req.query.search, $options: 'i' } }
+        ]
+    } : {}
+
+    const supplier = await Food.find(keyword)
+
+    res.status(200).json(supplier)
+})

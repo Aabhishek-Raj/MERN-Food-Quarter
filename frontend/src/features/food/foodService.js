@@ -48,3 +48,20 @@ export const deleteItem = async(foodId, token) => {
     const response = await API.delete('/deleteitem', config)
     return response.data
 }
+
+export const foodSearch = async (search) => {
+    const storageData = await JSON.parse(localStorage.getItem('profile'))
+
+    try {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${storageData.Token}`
+            },
+            params: {search}
+        }
+        const response = await API.get('/foodsearch', config)
+        return response.data 
+    } catch (error) {
+        console.log(error.response.message)
+    }
+}
