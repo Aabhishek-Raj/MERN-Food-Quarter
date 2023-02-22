@@ -75,7 +75,7 @@ const TopSupplier = () => {
 
             {/* Top Chefs */}
 
-            <div className="w-full flex flex-col mt-8">
+            {/* <div className="w-full flex flex-col mt-8">
                 <div className="flex flex-row justify-between items-center">
                     <h2 className="text-black fond-bold text-2xl">Recommended</h2>
                     <Link to={'/chefs'}>
@@ -99,7 +99,7 @@ const TopSupplier = () => {
 
                 </Swiper>
 
-            </div>
+            </div> */}
 
 
         </div>

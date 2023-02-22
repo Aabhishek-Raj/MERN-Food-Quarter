@@ -23,19 +23,19 @@ const SupplierLayout = () => {
 
       {/* Left Side */}
       <div className="flex items-center mx-10">
-        <div onClick={() => setNav(!nav)} className="cursor-pointer">
+        {/* <div onClick={() => setNav(!nav)} className="cursor-pointer">
           <AiOutlineMenu size={25} />
-        </div>
+        </div> */}
 
         {/* Search input */}
-
+{/* 
         <div className="bg-gray-200 ml-auto flex rounded-full items-center px-2 w-[200px] sm:w-[400px] lg:w-[500px] ">
           <AiOutlineSearch size={25} />
           <input className="bg-transparent p-2 w-full focus:outline-none" type="text" placeholder="Search foods" />
-        </div>
+        </div> */}
 
         {/* cart button */}
-        <button className="bg-black ml-auto   text-white hidden md:flex items-center px-4 py-2 rounded-full"> <BsFillCartFill size={20} className="mr-2" />Orders</button>
+        {/* <button className="bg-black ml-auto   text-white hidden md:flex items-center px-4 py-2 rounded-full"> <BsFillCartFill size={20} className="mr-2" />Orders</button> */}
       </div>
 
       {/* MObile MenuU */}

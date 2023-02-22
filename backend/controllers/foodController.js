@@ -75,7 +75,7 @@ module.exports.addItems = asyncHandler( async (req, res) => {
         return res.status(400).json({message: "Upload another image"})
     }
 
-    const items = {...req.body, foodpic: result.Key}
+    const items = {...req.body, foodpic: result.Key} 
 
     const insertItem = await Package.findOneAndUpdate({_id: id}, {$push: {FoodItems: items}}, {new: true} )
 

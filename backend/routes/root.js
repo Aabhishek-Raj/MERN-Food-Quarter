@@ -15,4 +15,15 @@ router.get('/blocked', (req, res) => {
     res.sendFile(path.join(__dirname, "..", "views", "blocked.html"))
 })
 
+router.get('/file/:uploads/:filename', (req, res) => {
+
+    const { filename } = req.params;
+
+    const filePath = path.join(__dirname,'..', 'uploads', filename);  
+
+    res.sendFile(filePath);
+
+  }); 
+
+
 module.exports = router

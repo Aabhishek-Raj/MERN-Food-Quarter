@@ -109,3 +109,31 @@ export const sendMessage = async (content, chatId, manage) => {
         console.log(err.response.message)
     }
 }
+
+export const sendFiles = async (formData, manage) => {
+
+    try{
+        let token
+
+        if(manage === 'USER'){
+            const storageData = await JSON.parse(localStorage.getItem('profile'))
+            token = storageData.Token
+        }else {
+            const storageData = await JSON.parse(localStorage.getItem('supplier'))
+            token = storageData.SupplierToken
+        }
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+
+        const response = await API.post('/sendfiles',formData, config)
+        return response.data
+
+    } catch(err) {
+        console.log(err)
+        return err.response.message
+    }
+}

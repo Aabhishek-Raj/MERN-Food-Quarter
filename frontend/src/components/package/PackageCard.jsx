@@ -26,11 +26,6 @@ const PackageCard = ( props ) => {
           </Link>
       </div>
 
-
-
-
-
-
     </>
   )
 }

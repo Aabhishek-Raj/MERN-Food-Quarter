@@ -54,7 +54,7 @@ module.exports.accessChat = asyncHandler(async (req, res) => {
     
     let chat = await Chat.find(query).populate('user', '-password').populate('supplier', '-password').populate('latestmsg')
 
-    chat = await User.populate(chat, {
+    chat = await User.populate(chat, { 
         path: 'latestmsg.sender', 
         select: 'name email'
     })
@@ -88,7 +88,6 @@ module.exports.fetchChats = asyncHandler(async (req, res) => {
         ]
     }).populate('user', '-password').populate('supplier', '-password').populate('latestmsg').sort({ updatedAt: -1 })
 
-    console.log(chats)
 
     const allChats = await User.populate(chats, {
         path: 'latestmsg.sender',
@@ -160,6 +159,12 @@ module.exports.userSearch = asyncHandler(async (req, res) => {
     const supplier = await Supplier.find(keyword)
 
     res.status(200).json(supplier)
-
-    console.log(keyword)
 })
+
+//@desc Send images & videos
+//@route POST /sendfiles
+//@access Private
+module.exports.sendFiles = asyncHandler(async (req, res) => {
+    return res.status(200).json({url: req.file.path}) 
+}) 
+

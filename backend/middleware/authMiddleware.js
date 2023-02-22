@@ -45,9 +45,9 @@ const supplierProtect =asyncHandler(async(req, res, next) => {
       next()
     } catch(error) {
       res.status(401)
-      throw new Error('Not authorized')
+      throw new Error('Not authorized')     
     }
-  }
+  } 
 
   if(!token) {
     res.status(401)
@@ -93,7 +93,7 @@ const combinedMiddleware = (req, res, next) => {
   }) 
 }
 
-const checkBlocked = (req, res, next) => {
+const checkBlocked = (req, res, next) => { 
   console.log(req.user)
   if (req.user && !req.user.isActive) {
     console.log('Blocked user')
