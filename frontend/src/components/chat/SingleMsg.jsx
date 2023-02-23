@@ -16,8 +16,13 @@ const SingleMsg = ({ message }) => {
         <>
          {user && (<div class={`${user.user._id === message.sender ? "self-end" : "self-start"} w-3/4 my-2`}>
         <div class={`${user.user._id === message.sender ? "bg-white" : 'bg-blue-300'} p-4 text-sm rounded-t-lg rounded-r-lg shadow`}>
-        <video />
-        <img className='max-w-2xl' src={`http://localhost:4000/file/${message?.content}`} alt='/'/>
+          {
+            message.content.substring(message.content.length - 3, message.content.length) === 'mp4' ?
+            <video src={`http://localhost:4000/file/${message.content}`} alt="/video" type="video/mp4" controls/>
+            :
+            <img src={`http://localhost:4000/file/${message?.content}`} alt='img'/>
+
+          }
         </div>
       </div>)}
 
