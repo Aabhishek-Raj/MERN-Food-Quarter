@@ -43,7 +43,7 @@ app.all('*', (req, res) => {
     if(req.accepts('html')){
         res.sendFile(path.join(__dirname, 'views', '404.html'))
     } else if(req.accepts('json')){
-        res.json({message: '404 Not found'})
+        res.json({message: '404 Not found'}) 
     }else{
         res.type('txt').send('404 Not found')
     }
@@ -70,22 +70,19 @@ io.on('connection', socket => {
     console.log(`New socket connection from ${socket.handshake.address}`)
 
     socket.on('setup', (userData) => {  
-        // console.log('vann')
         // console.log(userData)
         socket.join(userData._id)
-        // userData.user?.roles &&  socket.join(userData.user._id)
-        // !userData.user?.roles && socket.join(userData.supplier._id) 
+
         socket.emit('connected')   
         console.log(`${userData.user?.username || userData.supplier?.name} connected`)
     })  
 
-    socket.on('join chat', (room) => {
+    socket.on('join chat', (room) => {       
         socket.join(room)
         console.log('User joined the Room ' + room)
     }) 
-
-    socket.on('new message', (newMessageRecieved) => { 
-        // console.log(newMessageRecieved)
+ 
+    socket.on('new message', (newMessageRecieved) => {    
         let chat = newMessageRecieved.chat 
         console.log(chat._id)
 
@@ -93,7 +90,7 @@ io.on('connection', socket => {
         
         // if(chat.user?._id === newMessageRecieved.sender ){
 
-            socket.in(chat._id ).emit('message recieved', newMessageRecieved)
+            socket.in(chat._id ).emit('message recieved', newMessageRecieved)      
         // }
 
         // if(chat.supplier?._id === newMessageRecieved.sender){

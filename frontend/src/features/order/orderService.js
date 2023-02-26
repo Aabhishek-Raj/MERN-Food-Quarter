@@ -37,6 +37,23 @@ export const getAddresses = async() => {
     }
 }
 
+export const editTheAddress = async(data) => {
+    const storageData = await JSON.parse(localStorage.getItem('profile'))
+
+    try {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${storageData.Token}`
+            }
+        }
+
+        const response = await API.patch('/editAddress', {data}, config)
+        return response.data
+    } catch(err) {
+        return err.data.message
+    }
+}
+
 export const razorpayPayment = async (amount) => {
     const storageData = await JSON.parse(localStorage.getItem('profile'))
 

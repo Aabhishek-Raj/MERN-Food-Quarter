@@ -5,7 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import AddressForm from '../../components/order/AddressForm'
 import AddressView from '../../components/order/AddressView'
-import { getAddresses, razorpayPayment, verifyPayment } from './orderService'
+import EditAddressForm from '../../components/order/EditAddressForm'
+import { getAddresses, getAddressToEdit, razorpayPayment, verifyPayment } from './orderService'
 
 const CheckOut = () => {
 
@@ -19,6 +20,8 @@ const CheckOut = () => {
     const [addresses, setAddresses] = useState()
     const [selectedAddress, setSelectedAddress] = useState()
 
+    const [editAddress, setEditAddress] = useState()
+
     const navigate = useNavigate()
 
     const fetchData = async () => {
@@ -29,7 +32,7 @@ const CheckOut = () => {
     useEffect(() => {
       fetchData()
     
-    },[])
+    },[editAddress, addresses])
 
     const initPayment = (order) => {
         const options = {
@@ -66,6 +69,15 @@ const CheckOut = () => {
        initPayment(order.data, pack, selectedAddress)
     }
 
+    const handleGetAddressToEdit = async (addressId) => {
+        console.log(addressId)
+        const result = addresses.find(address => address._id === addressId)
+        setEditAddress(result)
+
+        // const result = await getAddressToEdit(addressId)
+        // console.log(result)
+      }
+
 
 
     return (
@@ -74,15 +86,20 @@ const CheckOut = () => {
             <div class="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
                 <div class="md:w-2/3">
 
+                  {!editAddress && !from &&
                     <div id="dropdownHelperRadio" class="" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top">
                       { addresses &&   addresses.map((address) => (
-                        <AddressView key={address._id} address={address} handleSelectAddress={handleSelectAddress}/>
+                        <AddressView key={address._id} address={address} handleSelectAddress={handleSelectAddress} handleGetAddressToEdit={handleGetAddressToEdit}/>
 
                         ))
                         }
                     </div>
+                  } 
                     <div>
-                        <button onClick={() => setFrom(!from)}>Add new Address</button>
+                       {
+                        !editAddress && !from && <button onClick={() => setFrom(!from)}>Add new Address</button>
+                       } 
+                       {editAddress && <EditAddressForm editAddress={editAddress} setEditAddress={setEditAddress} />}
                         {from && <AddressForm />}
                     </div>
                 </div>

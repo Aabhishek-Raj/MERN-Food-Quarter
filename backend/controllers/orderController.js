@@ -24,6 +24,56 @@ module.exports.getAddress = asyncHandler(async (req, res) => {
     res.status(200).json(addresses.address)
 })
 
+module.exports.getAddressForEdit = asyncHandler(async (req, res) => {
+
+    const addressData = await Address.findOne({ user: req.user._id })
+
+    const address = addressData.address.filter((each => each._id == req.query.addressId))
+
+    if (!address) {
+        return res.status(400).json({ message: 'address not to update' })
+    }
+
+    res.status(200).json(address)
+})
+
+module.exports.editTheAddress = asyncHandler(async (req, res) => {
+
+    const addressData = await Address.findOne({ user: req.user._id })
+
+    if(!addressData) {
+        return res.status(400).json({message: 'no user with that address'})
+    }
+
+    const newAddress = addressData.address.map(each => {
+        if(each._id == req.body.data._id){
+            return req.body.data
+        }else {
+            return each
+        }
+    } )
+
+    if (!newAddress) {
+        return res.status(400).json({ message: 'address not to update' })
+    }
+
+    const newAddressData = {
+        ...addressData.toObject(),
+        address: newAddress
+    }
+    console.log(newAddressData)
+    
+    const updatedAddressData = await Address.findOneAndUpdate({ user: req.user._id }, newAddressData, { new: true })
+
+    if(!updatedAddressData) {
+        return res.status(400).json({message: 'unable to update address'})
+    }
+    console.log(updatedAddressData)
+    
+    res.status(200).json({message: 'address edited'})
+
+})
+
 module.exports.razorpayPayment = asyncHandler(async (req, res) => {
     const instance = new Razorpay({
         key_id: process.env.RAZ_KEY_ID,
@@ -119,25 +169,24 @@ module.exports.getDeliveryAddress = asyncHandler(async (req, res) => {
         {
             $match: { user: ObjUserId }
         },
-        {  
-            $unwind: '$address' 
+        {
+            $unwind: '$address'
         },
         {
             $match: { 'address._id': ObjAddressId }
         },
         {
             // $arrayElemAt: ['$address', 0]
-            $replaceRoot: { newRoot: "$address" } 
+            $replaceRoot: { newRoot: "$address" }
         },
         // {
         //     $project: {address: {$arrayElemAt:['$address', 0]}}
         // }   
     ])
 
-    if(!address){      
-        return res.status(400).json({message: 'Address not found'})   
+    if (!address) {
+        return res.status(400).json({ message: 'Address not found' })
     }
-    console.log(address)
 
     res.status(200).json(address)
 })                      

@@ -18,7 +18,7 @@ module.exports.createChat = asyncHandler( async (req, res) => {
         select: 'name email'
     })
 
-    if (chat?.length > 0) {
+    if (chat?.length > 0) { 
         res.json(chat[0])
     }
  
@@ -102,6 +102,7 @@ module.exports.fetchChats = asyncHandler(async (req, res) => {
 
 module.exports.sendMessage = asyncHandler(async (req, res) => {
     const { content, chatId, } = req.body
+    console.log(req.body)
 
     if (!content || !chatId) {
         return res.status(400).json({ message: "Invalid" })

@@ -5,6 +5,7 @@ const router = express.Router()
 
 router.post('/address', protect, orderController.addAddress)
 router.get('/getaddresses', protect, orderController.getAddress)
+router.patch('/editaddress', protect, orderController.editTheAddress)
 
 router.post('/order', protect, orderController.razorpayPayment)
 router.post('/verify', protect, orderController.paymentVerify)

@@ -9,7 +9,7 @@ const ManagePackage = () => {
 
   const { id } = useParams()
 
-  const [personCount, setPersonCount] = useState('')
+  const [personCount, setPersonCount] = useState('') 
 
   const dispatch = useDispatch()
 

@@ -121,7 +121,7 @@ module.exports.getSupplierRequest = asyncHandler(async (req, res) => {
 //@desc Block an user
 //@route POST /blockuser
 //@access Private
-module.exports.blockUser = asyncHandler(async (req, res) => {
+module.exports.blockUser = asyncHandler(async (req, res) => {  
     const {userId} = req.body
     console.log(userId)
     console.log('blocking')

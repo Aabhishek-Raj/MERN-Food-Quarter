@@ -1,6 +1,10 @@
 import React from 'react'
+import { editAddress, getAddressToEdit } from '../../features/order/orderService'
 
-const AddressView = ({ address, handleSelectAddress }) => {
+const   AddressView = ({ address, handleSelectAddress, handleGetAddressToEdit }) => {
+
+
+
   return (
     <>
       <ul class="w-full p-3 space-y-1 text-sm dark:text-gray-200" aria-labelledby="dropdownHelperRadioButton" >
@@ -18,13 +22,13 @@ const AddressView = ({ address, handleSelectAddress }) => {
                   <div class="flex items-start px-4 py-6">
                     {/* <img class="w-12 h-12 rounded-full object-cover mr-4 shadow" src="https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="avatar" /> */}
                     <div class="">
-                      <div class="flex items-center justify-between">
+                      <div class="flex items-end justify-between">
                         <h2 class="text-lg font-semibold text-gray-900 -mt-1">{address.name}</h2>
-                        <small class="text-sm text-gray-700">{address.addressType}</small>
+                        <button onClick={() => handleGetAddressToEdit(address._id)} class=" text-sm text-gray-700">Edit Address</button>
                       </div>
                       <p class="text-gray-700">{address.locality} </p>
                       <p class="mt-3 text-gray-700 text-sm">
-                         {address.address} {address.district} {address.state} {address.landmark} 
+                         {address.address} {address.district} {address.state} {address.landmark} {address.addressType}
                       </p>
                   
                     </div>

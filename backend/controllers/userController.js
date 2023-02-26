@@ -112,12 +112,10 @@ const sendVerificationEmail = ({ _id, email }, res) => {
                             res.status(200).json({ message: "Verification email send", _id, email})
                         })
                         .catch((error) => {
-                            console.log(error)
                             res.status(401).json({ message: "Verification email failed" })
                         })
                 })
                 .catch((error) => {
-                    console.log(error)
                     res.status(401).json({ message: "Counldn't save verification email data" })
                 })
         })
@@ -159,7 +157,6 @@ module.exports.verifyEmail = (req, res) => {
                                 })
                         })
                         .catch((error) => {
-                            console.log(error)
                             let message = "An error occurred while clearing expired user verification record"
                             res.redirect(`/user/verified/error=true&message=${message}`)
                         })
