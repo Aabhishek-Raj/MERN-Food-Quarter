@@ -90,10 +90,10 @@ function App() {
           <Route path="users" element={<UsersView />} />
           <Route path="suppliers" element={<SuppliersView />} />
           <Route path="verify" element={<Verifications />} />
+          <Route path="line" element={<Line />} />
           <Route path="form" element={<Form />} />
           <Route path="bar" element={<Bar />} />
           <Route path="pie" element={<Pie />} />
-          <Route path="line" element={<Line />} />
           <Route path="faq" element={<FAQ />} />
           <Route path="calendar" element={<Calendar />} />
           <Route path="geography" element={<Geography />} />

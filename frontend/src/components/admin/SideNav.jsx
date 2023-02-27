@@ -157,13 +157,20 @@ const SideNav = () => {
               setSelected={setSelected}
             />
 
-            {/* <Typography
+            <Typography
               variant="h6"
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Pages
-            </Typography> */}
+              Details
+            </Typography>
+            <Item
+              title="Line Chart"
+              to="/admin/line"
+              icon={<TimelineOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
             <Item
               // title="Profile Form"
               to="/form"
@@ -207,13 +214,7 @@ const SideNav = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
-              // title="Line Chart"
-              to="/line"
-              // icon={<TimelineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+         
             <Item
               // title="Geography Chart"
               to="/geography"

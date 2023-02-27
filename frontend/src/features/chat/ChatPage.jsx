@@ -13,6 +13,8 @@ import Dropzone from 'react-dropzone'
 import { GrUploadOption } from 'react-icons/gr'
 import { FaFileInvoiceDollar } from 'react-icons/fa'
 import InvoiceCreate from '../order/InvoiceCreate'
+import AddressView from '../../components/order/AddressView'
+import { invoiceChange } from '../package/packageSlice'
 
 const ENDPOINT = 'http://localhost:4000'
 
@@ -35,6 +37,10 @@ const ChatPage = () => {
 
     const [invoiceData, setInvoiceData] = useState()
     const [invoice, setInvoice] = useState(false)
+
+    const [packData, setPackData] = useState()
+
+    const [addressSelect, setAddressSelect] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -131,7 +137,6 @@ const ChatPage = () => {
 
         socket.emit('new message', result)      
     }
-    console.log(invoiceData)
 
     useEffect(() => {
 
@@ -140,12 +145,21 @@ const ChatPage = () => {
         }
         
     }, [invoiceData])
+
+//   const handleInvoicePay = () => {
+//     dispatch(invoiceChange(packData))
+
+//   }  
+
+
     
 
     return (
         <>
             <div class="relative flex w-full h-screen overflow-hidden antialiased bg-gray-200">
-
+        {
+            addressSelect && <AddressView />
+        }
                 <ChatSide />
                 {/* <!-- center --> */}
                 <div class="relative flex flex-col flex-1">
@@ -189,7 +203,7 @@ const ChatPage = () => {
 
                                 {messages?.length > 0 &&
                                     messages.map((each) => (
-                                        <SingleMsg key={each._id} message={each} />
+                                        <SingleMsg key={each._id} message={each} setPackData={setPackData}/>
                                     ))
                                 }
                             </div>

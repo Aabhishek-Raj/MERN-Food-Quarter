@@ -12,10 +12,27 @@ import Header from "../../components/admin/Header";
 // import BarChart from "../../components/BarChart";
 import StatBox from "../../components/admin/Stat";
 import Circle from "../../components/admin/Circle";
+import { useState } from "react";
+import { getNumbers } from "./adminService";
+import SuppliersView from "../../components/admin/SuppliersView";
 
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const [countData, setCountData] = useState()
+
+
+  const fetchData = async() => {
+    const result = await getNumbers()
+    setCountData(result)
+  }
+
+  useState(() => {
+    fetchData()
+  })
+
+  console.log(countData)
 
   return (
     <Box m="20px">
@@ -55,7 +72,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="12,361"
+            title={countData?.userCount}
             subtitle="Customers"
             progress="0.75"
             increase="+14%"
@@ -74,8 +91,8 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="431,225"
-            subtitle="Sales "
+            title={countData?.supplierCount}
+            subtitle="Supplier "
             progress="0.50"
             increase="+21%"
             // icon={
@@ -93,8 +110,8 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="32,441"
-            subtitle="Supplier"
+            title={countData?.orderCount}
+            subtitle="Sales"
             progress="0.30"
             increase="+5%"
             // icon={
@@ -112,8 +129,8 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="1,325,134"
-            subtitle="Total Profit"
+            title={countData?.foodCount}
+            subtitle="Total Items"
             progress="0.80"
             increase="+43%"
             // icon={
@@ -162,7 +179,7 @@ const Dashboard = () => {
             </Box>
           </Box>
           <Box height="250px" m="-20px 0 0 0">
-            {/* <LineChart isDashboard={true} /> */}
+            <SuppliersView/>
           </Box>
         </Box>
         <Box

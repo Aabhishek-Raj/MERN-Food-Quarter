@@ -150,3 +150,38 @@ export const blockSupplier = async (supplierId, manage) => {
         console.log(err.response.data)
     }
 }
+
+//get Order Order data
+export const getSales = async () => {
+    const storageData = JSON.parse(localStorage.getItem('admin'))
+
+    try {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${storageData.token}`
+            }
+        }
+        const response = await API.get('/getallsales', config)
+        return response.data
+    }catch (err) {
+        console.log(err.response)
+        return err.response.message
+    }
+}
+
+//get all numbers 
+export const getNumbers = async () => {
+    const storageData = JSON.parse(localStorage.getItem('admin'))
+
+    try {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${storageData.token}`
+            }
+        }
+        const response = await API.get('/getnumbers', config)
+        return response.data
+    } catch (err) {
+        return err.response.message
+    }
+}
