@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { invoiceChange } from '../../features/package/packageSlice'
 
 
@@ -25,8 +25,9 @@ const SingleMsg = ({ message, setPackData }) => {
 
 
   const handleInvoicePay = () => {
+
     dispatch(invoiceChange(JSON.parse(message?.content)))
-    navigate(`/dash/checkout/${JSON.parse(message?.content).supplierId}`)
+    navigate(`/dash/invoicepay/${JSON.parse(message?.content).supplierId}`)
 
   }  
 
@@ -76,7 +77,9 @@ const SingleMsg = ({ message, setPackData }) => {
                     user && (
                       <div class="flex p-4 border-t border-gray-300 text-gray-700">
                         <div class="flex-1 inline-flex items-center">
+ 
                           <button onClick={handleInvoicePay} class="text-gray-900 font-bold"> Pay now</button>
+
                         </div>
                       </div>
                     )

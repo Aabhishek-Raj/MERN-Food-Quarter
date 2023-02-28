@@ -42,6 +42,8 @@ import OrderFullView from './components/order/OrderTable';
 import Dashboard from './features/admin/Dashboard';
 import OrderTable from './components/order/OrderTable';
 import OrderHistory from './components/order/OrderHistory';
+import InvoiceCheckout from './features/order/InvoiceCheckout';
+import SalesReport from './components/admin/SalesReport';
 
 
 
@@ -66,6 +68,7 @@ function App() {
             <Route path="checkout/:id" element={<CheckOut/>} />
             <Route path='success' element={<Success />} /> 
             <Route path="history" element={<OrderTable/>} />
+            <Route path="invoicepay/:id" element={<InvoiceCheckout/>} />
 
 
           </Route>  {/* End of Dash */}
@@ -89,8 +92,8 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="users" element={<UsersView />} />
           <Route path="suppliers" element={<SuppliersView />} />
-          <Route path="verify" element={<Verifications />} />
           <Route path="line" element={<Line />} />
+          <Route path="salesreport" element={<SalesReport />} />
           <Route path="form" element={<Form />} />
           <Route path="bar" element={<Bar />} />
           <Route path="pie" element={<Pie />} />

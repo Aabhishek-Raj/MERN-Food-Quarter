@@ -6,6 +6,8 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
 const { response } = require('express')
+const Order = require('../models/orderSchema')
+const Food = require('../models/foodSchema')
 
 //@desc admin signup
 //@route POST /
@@ -36,7 +38,7 @@ module.exports.adminSignUp = asyncHandler(async (req, res) => {
             'roles': admin.roles,
         }
     }, process.env.ADMIN_TOKEN,
-        { expiresIn: '10d' })
+        { expiresIn: '30d' })
 
     if (admin) {
         res.status(201).json({ admin, token })
@@ -74,7 +76,7 @@ module.exports.adminSignIn = asyncHandler(async (req, res) => {
             'roles': foundAdmin.roles,
         }
     }, process.env.ADMIN_TOKEN,
-        { expiresIn: '10d' })
+        { expiresIn: '30d' })
 
     res.status(200).json({ admin: foundAdmin, token })
 
@@ -109,7 +111,7 @@ module.exports.getVerifiedSuppliers = asyncHandler(async (req, res) => {
 //@route GET /notverified
 //@access Private
 module.exports.getSupplierRequest = asyncHandler(async (req, res) => {
-    
+
     const supplier = await Supplier.find({ isVerified: false }).select('-password').lean().exec()
 
     if (!supplier?.length) {
@@ -121,33 +123,33 @@ module.exports.getSupplierRequest = asyncHandler(async (req, res) => {
 //@desc Block an user
 //@route POST /blockuser
 //@access Private
-module.exports.blockUser = asyncHandler(async (req, res) => {  
-    const {userId} = req.body
+module.exports.blockUser = asyncHandler(async (req, res) => {
+    const { userId } = req.body
     console.log(userId)
     console.log('blocking')
 
-    const user = await User.findByIdAndUpdate(userId, {isActive: false})
+    const user = await User.findByIdAndUpdate(userId, { isActive: false })
 
-    res.status(200).json({message: `${user?.username} has been blocked`}) 
+    res.status(200).json({ message: `${user?.username} has been blocked` })
 })
 
 //@desc unBlock an user
 //@route POST /unblockuser
 //@access Private
 module.exports.unBlockUser = asyncHandler(async (req, res) => {
-    const {userId} = req.body
+    const { userId } = req.body
     console.log('unblocking')
 
-    const user = await User.findByIdAndUpdate(userId, {isActive: true})
+    const user = await User.findByIdAndUpdate(userId, { isActive: true })
 
-    res.status(200).json({message: `${user.username} has been Unblocked`})
+    res.status(200).json({ message: `${user.username} has been Unblocked` })
 
 })
 
 //@desc Send Email
 //@route GET  /send
 //@access Private
-function sendEmail(){
+function sendEmail() {
 
     return new Promise((resolve, reject) => {
 
@@ -165,11 +167,11 @@ function sendEmail(){
             subject: 'Testing the emil of food app',
             text: 'Sorry !! You have been rejected by the admin'
         }
-        transports.sendEmail(mail_configs, function(err, info ){
-            if(err){
-                return reject({message: 'An error has ocured'})
+        transports.sendEmail(mail_configs, function (err, info) {
+            if (err) {
+                return reject({ message: 'An error has ocured' })
             }
-            return resolve({message: "Email send Sucessfully"})
+            return resolve({ message: "Email send Sucessfully" })
         })
     })
 }
@@ -201,11 +203,11 @@ module.exports.rejectSupplier = asyncHandler(async (req, res) => {
 //@route PATCH   /blocksupplier
 //@access Private
 module.exports.blockSupplier = asyncHandler(async (req, res) => {
-    const {supplierId} = req.body
+    const { supplierId } = req.body
 
-    const supplier = await Supplier.findByIdAndUpdate(supplierId, {isActive: false})
+    const supplier = await Supplier.findByIdAndUpdate(supplierId, { isActive: false })
 
-    res.status(200).json({message: `${supplier?.name} has been blocked`}) 
+    res.status(200).json({ message: `${supplier?.name} has been blocked` })
 
 })
 
@@ -213,10 +215,65 @@ module.exports.blockSupplier = asyncHandler(async (req, res) => {
 //@route PATCH   /unblocksupplier
 //@access Private
 module.exports.unBlockSupplier = asyncHandler(async (req, res) => {
-    const {supplierId} = req.body
- 
-    const supplier = await Supplier.findByIdAndUpdate(supplierId, {isActive: true})
+    const { supplierId } = req.body
 
-    res.status(200).json({message: `${supplier?.name} has been Unblocked`}) 
+    const supplier = await Supplier.findByIdAndUpdate(supplierId, { isActive: true })
+
+    res.status(200).json({ message: `${supplier?.name} has been Unblocked` })
 
 })
+
+//@desc Get sales data
+//@route GET   /getallsales
+//@access Private
+module.exports.getSales = asyncHandler(async (req, res) => {
+
+    const data = await Order.find({})
+
+    if (!data) {
+        return res.status(404).json({ message: 'No sales found' })
+    }
+
+    res.status(200).json(data)
+})
+
+//@desc Get number data
+//@route GET   /getnumbers
+//@access Private
+module.exports.getNumbers = asyncHandler(async (req, res) => {
+
+    const userCount = await User.countDocuments()
+    const supplierCount = await Supplier.countDocuments()
+    const orderCount = await Order.countDocuments()
+    const foodCount = await Food.countDocuments()
+
+    const countData = {
+        userCount,
+        supplierCount,
+        orderCount,  
+        foodCount
+    }
+
+    if(!countData) {
+        return res.status(400).json({message: 'App doesnot have anu data'})
+    }
+
+    res.status(200).json(countData)
+})
+
+//@desc Get Sales report
+//@route GET   /salesreport
+//@access Private
+module.exports.getSalesReport = asyncHandler(async (req, res) => {
+    console.log('hai va')
+    
+    const sales = await Order.find({}).populate('user').populate('supplierId')
+
+    if(!sales) {
+        return res.status(400).json({message: 'There is no sales'})
+    }
+
+    res.status(200).json(sales)
+})
+      
+

@@ -25,8 +25,9 @@ const SuppliersFood = ({ user }) => {
   }, [dispatch, id]);
 
   return (
-    <>
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-2 mx-10'>
+    <div className='h-[705px] overflow-y-scroll hide-scrollbar'>
+
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-2 mx-10 '>
         <div className='py-2 flex-1 flex flex-col items-start justify-center gap-6'>
 
               <Search item setFoodSearchResult={setFoodSearchResult}/>
@@ -62,7 +63,7 @@ const SuppliersFood = ({ user }) => {
         )
       }
 
-    </>
+    </div>
 
   )
 }

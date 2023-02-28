@@ -18,12 +18,12 @@ const SinlgeView = () => {
         {/* <!-- Breadcrumbs --> */}
 
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 mb-52">
+        <div class="w-screen mx-auto px-4 sm:px-6 lg:px-8 mt-6 mb-52">
           <div class="flex flex-col md:flex-row -mx-4">
             <div class="md:flex-1 px-4">
               <div x-data="{ image: 1 }" x-cloak>
-                <div class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4">
-                  <img class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center" src={`http://localhost:4000/images/${food.image}`}alt="" />
+                <div class="h-64 md:h-80 rounded-lg mb-4">
+                  <img class="object-cover w-[600px] h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center" src={`http://localhost:4000/images/${food.image}`}alt="" />
                 </div>
 
                 <div class="flex -mx-2 mb-4">

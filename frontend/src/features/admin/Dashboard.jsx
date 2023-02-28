@@ -14,7 +14,6 @@ import StatBox from "../../components/admin/Stat";
 import Circle from "../../components/admin/Circle";
 import { useState } from "react";
 import { getNumbers } from "./adminService";
-import SuppliersView from "../../components/admin/SuppliersView";
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -179,7 +178,7 @@ const Dashboard = () => {
             </Box>
           </Box>
           <Box height="250px" m="-20px 0 0 0">
-            <SuppliersView/>
+            {/* <LineChart isDashboard={true} /> */}
           </Box>
         </Box>
         <Box
@@ -231,7 +230,7 @@ const Dashboard = () => {
               </Box>
             </Box>
           ))} */}
-        </Box>
+        </Box> 
 
         {/* ROW 3 */}
         {/* <Box

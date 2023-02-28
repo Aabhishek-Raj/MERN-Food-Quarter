@@ -89,19 +89,24 @@ const packageSlice = createSlice({
             } else {
                 state[id].total = currentTotal
             }
+            
+            localStorage.setItem('packages', JSON.stringify(state))
         },
         invoiceChange: (state, action) => {
-            const {discount, forPerson, ifPerson, supplierId} = action.payload
-            console.log(discount, forPerson, ifPerson, supplierId) 
-            if( state[supplierId].people > ifPerson) {
+            state.Invoice = action.payload
+            // const {discount, forPerson, ifPerson, supplierId} = action.payload
+            // console.log(discount, forPerson, ifPerson, supplierId) 
+            // if( state[supplierId].people > ifPerson) {
 
-                state[supplierId].people = ifPerson
-            }
-            console.log(state[supplierId].people)
-            const totalDiscount = (state[supplierId].people / forPerson) * discount
-            const newTotal = state[supplierId].total - totalDiscount
-            state[supplierId].total = newTotal
+            //     state[supplierId].people = ifPerson
+            // }
+            // console.log(state[supplierId].people)
+            // const totalDiscount = (state[supplierId].people / forPerson) * discount
+            // const newTotal = state[supplierId].total - totalDiscount
+            // state[supplierId].total = newTotal
+            localStorage.setItem('packages', JSON.stringify(state))
         }
+
 
     }
 }

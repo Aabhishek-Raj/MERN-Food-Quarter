@@ -70,7 +70,6 @@ io.on('connection', socket => {
     console.log(`New socket connection from ${socket.handshake.address}`)
 
     socket.on('setup', (userData) => {  
-        // console.log(userData)
         socket.join(userData._id)
 
         socket.emit('connected')   
@@ -87,16 +86,8 @@ io.on('connection', socket => {
         console.log(chat._id)
 
         if(!chat.user || !chat.supplier) return console.log('chat.users is not defined') 
-        
-        // if(chat.user?._id === newMessageRecieved.sender ){
 
             socket.in(chat._id ).emit('message recieved', newMessageRecieved)      
-        // }
-
-        // if(chat.supplier?._id === newMessageRecieved.sender){
-        //     socket.to()
-        //     socket.in(chat.supplier._id).emit('message recieved', newMessageRecieved)
-        // }
 
     })
 })

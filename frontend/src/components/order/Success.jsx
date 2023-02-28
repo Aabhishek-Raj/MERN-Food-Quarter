@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const Success = () => {
     return (
 
-        <div class="bg-gradient-to-br from-[#a6d1e6] to-[#daecf4]">
+        <div class=" bg-gradient-to-br from-[#a6d1e6] to-[#daecf4]">
             <div class="w-9/12 m-auto py-16 min-h-screen flex items-center justify-center">
                 <div class="bg-white shadow overflow-hidden sm:rounded-lg pb-8">
                     <div class="border-t border-gray-200 text-center pt-8">

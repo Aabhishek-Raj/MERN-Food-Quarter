@@ -31,7 +31,7 @@ const OrderHistory = () => {
 
     return (
 
-        <div class="relative max-w-md mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl mt-16">
+        <div class=" border border-black relative max-w-md mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl mt-16">
             <div class="px-6">
                 <div class="flex flex-wrap justify-center">
                     <div class="w-full flex justify-center">
@@ -66,10 +66,7 @@ const OrderHistory = () => {
                                 <TinyCard key={each._id} item={each}/>
                             ))
                         }
-                        {/* <TinyCard />
-                        <TinyCard />
-                        <TinyCard />
-                        <TinyCard /> */}
+
 
                     </div>
                 </div>
@@ -86,29 +83,11 @@ const OrderHistory = () => {
                                     </>
                                 )
                             }
-                            {/* <div className='flex justify-evenly'>
-                                <button class="font-normal bg-blue-400 p-3 rounded-lg border border-black text-slate-700 hover:text-white">Decline order</button>
-                                <button class="font-normal bg-blue-400 p-3 rounded-lg border border-black text-slate-700 hover:text-white">Take Order</button>
-
-                            </div> */}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-        // <footer class="relative pt-6 pb-2 mt-6">
-        //     <div class="container mx-auto px-4">
-        //         <div class="flex flex-wrap items-center md:justify-between justify-center">
-        //             <div class="w-full md:w-6/12 px-4 mx-auto text-center">
-        //             <div class="text-sm text-slate-500 font-semibold py-1">
-        //                 Tailwind CSS Component from <a href="https://www.creative-tim.com/product/notus-design-system-pro?ref=tailwindcomponents" class="text-slate-700 hover:text-slate-500" target="_blank">Notus PRO Html</a> by <a href="https://www.creative-tim.com" class="text-slate-700 hover:text-slate-500" target="_blank"> Creative Tim</a>.
-        //             </div>
-        //             </div>
-        //         </div>
-        //     </div>
-        // </footer>
     )
 }
 

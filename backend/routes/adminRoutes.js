@@ -15,6 +15,9 @@ router.patch('/unblockuser', adminController.unBlockUser)
 router.patch('/verify', adminController.verifySupplier)
 router.patch('/blocksupplier', adminController.blockSupplier)
 router.patch('/unblocksupplier', adminController.unBlockSupplier)
+router.get('/getallsales', adminController.getSales)
+router.get('/getnumbers', adminController.getNumbers)
+router.get('/salesreport', adminController.getSalesReport)
 
 
 module.exports = router

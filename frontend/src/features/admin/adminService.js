@@ -185,3 +185,20 @@ export const getNumbers = async () => {
         return err.response.message
     }
 }
+
+//get Sales Report
+export const getSalesReport = async () => {
+    const storageData = JSON.parse(localStorage.getItem('admin'))
+
+    try {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${storageData.token}`
+            }
+        }
+        const response = await API.get('/salesreport', config)
+        return response.data
+    } catch (err) {
+        return err.response.message
+    }
+}

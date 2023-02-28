@@ -43,7 +43,7 @@ const ChatSide = () => {
 
 
     return (
-        <div class="relative flex-col hidden h-full bg-white border-r border-gray-300 shadow-xl md:block transform transition-all duration-500 ease-in-out">
+        <div class="relative flex-col hidden bg-white border-r border-gray-300 shadow-xl md:block transform transition-all duration-500 ease-in-out">
             <div class="flex justify-between px-3 pt-1 text-white">
                 <div class="flex items-center w-full py-2">
                     <div class="relative flex items-center w-full pl-2 overflow-hidden text-gray-600 focus-within:text-gray-400">

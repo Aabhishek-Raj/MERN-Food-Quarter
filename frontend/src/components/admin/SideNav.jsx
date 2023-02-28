@@ -165,8 +165,8 @@ const SideNav = () => {
               Details
             </Typography>
             <Item
-              title="Line Chart"
-              to="/admin/line"
+              title="Sales Report"
+              to="/admin/salesreport"
               icon={<TimelineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}

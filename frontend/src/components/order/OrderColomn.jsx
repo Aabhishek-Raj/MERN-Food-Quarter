@@ -1,13 +1,18 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const OrderColomn = ({order}) => {
 
     const ProductIcon = ({item}) => (
+      <button>
+        <Link to={`/dash/single/${item._id}`}>
         <span
         class="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-600"
-      >
+        >
         {item.name}
       </span>
+          </Link>
+        </button>
       )
 
 
